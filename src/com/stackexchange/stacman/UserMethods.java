@@ -114,6 +114,41 @@ public final class UserMethods {
         return client.createApiTask(Types.User, ub, "/_users");
     }
 
+    public Future<StacManResponse<Answer>> GetAnswers(String site, Integer[] ids, String filter, Integer page, Integer pagesize, Date fromdate, Date todate, AnswerSort sort, Date mindate, Date maxdate, Integer min, Integer max, Order order) {
+        return GetAnswers(site, StacManClient.toIter(ids), filter, page, pagesize, fromdate, todate, sort, mindate, maxdate, min, max, order);
+    }
+
+    public Future<StacManResponse<Answer>> GetAnswers(String site, Iterable<Integer> ids, String filter, Integer page, Integer pagesize, Date fromdate, Date todate, AnswerSort sort, Date mindate, Date maxdate, Integer min, Integer max, Order order) {
+        client.validateString(site, "site");
+        client.validateEnumerable(ids, "ids");
+        client.validatePaging(page, pagesize);
+        client.validateSortMinMax(sort, mindate, maxdate, min, max);
+
+        ApiUrlBuilder ub =
+            new ApiUrlBuilder(
+                String.format(
+                    "/users/%1$S/answers",
+                    StacManClient.join(";", ids)
+                ),
+                false
+            );
+
+        ub.addParameter("site", site);
+        ub.addParameter("filter", filter);
+        ub.addParameter("page", page);
+        ub.addParameter("pagesize", pagesize);
+        ub.addParameter("fromdate", fromdate);
+        ub.addParameter("todate", todate);
+        ub.addParameter("sort", sort);
+        ub.addParameter("min", mindate);
+        ub.addParameter("max", maxdate);
+        ub.addParameter("min", min);
+        ub.addParameter("max", max);
+        ub.addParameter("order", order);
+
+        return client.createApiTask(Types.Answer, ub, "/_users/answers");
+    }
+
     public Future<StacManResponse<InboxItem>> getInbox(String site, String access_token, int id, String filter, Integer page, Integer pagesize) {
         client.validateString(site, "site");
         client.validateString(access_token, "access_token");
