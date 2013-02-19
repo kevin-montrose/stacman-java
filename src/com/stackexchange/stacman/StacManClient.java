@@ -71,7 +71,7 @@ public final class StacManClient {
 
                         GZIPInputStream gzip = new GZIPInputStream(in);
 
-                        InputStreamReader is = new InputStreamReader(in);
+                        InputStreamReader is = new InputStreamReader(gzip);
                         StringBuilder sb=new StringBuilder();
                         BufferedReader br = new BufferedReader(is);
                         String read = br.readLine();
@@ -80,6 +80,8 @@ public final class StacManClient {
                             sb.append(read);
                             read = br.readLine();
                         }
+
+                        gzip.close();
 
                         try
                         {
@@ -111,6 +113,14 @@ public final class StacManClient {
             throw new IllegalArgumentException(paramName + " cannot be empty");
     }
 
+    static void validatePaging(Integer page, Integer pagesize) {
+        if (page != null && page < 1)
+            throw new IllegalArgumentException("page must be positive");
+
+        if (pagesize != null && pagesize < 0)
+            throw new IllegalArgumentException("pagesize cannot be negative");
+    }
+
     static String join(String joiner, Iterable<String> parts) {
         String ret = "";
 
@@ -123,5 +133,15 @@ public final class StacManClient {
         }
 
         return ret;
+    }
+
+    static <T> Iterable<T> toIter(T[] array) {
+        ArrayList<T> asIter = new ArrayList<T>(array.length);
+
+        for(int i = 0; i < array.length; i++) {
+            asIter.add(array[i]);
+        }
+
+        return asIter;
     }
 }

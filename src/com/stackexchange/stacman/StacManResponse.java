@@ -5,7 +5,7 @@ package com.stackexchange.stacman;
  */
 public final class StacManResponse<T> {
     private boolean success;
-    public boolean getSucces(){ return success; }
+    public boolean getSuccess(){ return success; }
 
     private Wrapper<T> data;
     public Wrapper<T> getData() { return data; }
@@ -20,5 +20,7 @@ public final class StacManResponse<T> {
     StacManResponse(Wrapper<T> data, Exception error) {
         setData(data);
         setError(error);
+
+        success = error == null;
     }
 }

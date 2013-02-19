@@ -9,47 +9,36 @@ import java.util.ArrayList;
 class Wrapper<T> {
     private Integer backoff;
     public Integer getBackoff() { return backoff; }
-    public void setBackoff(Integer b) { backoff = b; }
 
-    private Integer errorId;
-    public Integer getErrorId() { return errorId; }
-    public void setErrorId(Integer e) { errorId = e; }
+    private Integer error_id;
+    public Integer getErrorId() { return error_id; }
 
-    private String errorMessage;
-    public String getErrorMessage(){ return errorMessage; }
-    public void setErrorMessage(String msg) { errorMessage = msg; }
+    private String error_message;
+    public String getErrorMessage(){ return error_message; }
 
-    private String errorName;
-    public String getErrorName() { return errorName; }
-    public void setErrorName(String name) { errorName = name; }
+    private String error_name;
+    public String getErrorName() { return error_name; }
 
-    private boolean hasMore;
-    public boolean getHasMore(){ return hasMore; }
-    public void setHasMore(boolean h) { hasMore = h; }
+    private boolean has_more;
+    public boolean getHasMore(){ return has_more; }
 
     private T[] items;
     public T[] getItems() { return items;  }
-    public void setItems(T[] i) { items =i; }
 
     private int page;
     public int getPage(){ return page; }
-    public void setPage(int p) { page = p; }
 
-    private int pageSize;
-    public int getPageSize(){ return pageSize; }
-    public void setPageSize(int p) { pageSize = p; }
+    private int page_size;
+    public int getPageSize(){ return page_size; }
 
-    private int quotaMax;
-    public int getQuotaMax() { return quotaMax; }
-    public void setQuotaMax(int m) { quotaMax = m; }
+    private int quota_max;
+    public int getQuotaMax() { return quota_max; }
 
-    private int quotaRemaining;
-    public int getQuotaRemaining() { return quotaRemaining; }
-    public void setQuotaRemaining(int q) { quotaRemaining = q; }
+    private int quota_remaining;
+    public int getQuotaRemaining() { return quota_remaining; }
 
     private int total;
     public int getTotal(){ return total; }
-    public void setTotal(int t) { total = t; }
 
     private String type;
     public String getType() { return type; }
