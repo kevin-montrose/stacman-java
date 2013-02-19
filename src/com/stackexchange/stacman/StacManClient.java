@@ -1,11 +1,6 @@
 package com.stackexchange.stacman;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.sun.corba.se.impl.encoding.IDLJavaSerializationInputStream;
-import com.sun.javafx.image.impl.IntArgbPre;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -14,7 +9,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.*;
 import java.util.concurrent.*;
-import java.util.concurrent.atomic.*;
+
 import java.util.zip.GZIPInputStream;
 
 /**
