@@ -723,7 +723,7 @@ public final class UserMethods {
         ApiUrlBuilder ub =
             new ApiUrlBuilder(
                 String.format(
-                    "/users/%1$S/questions/featured",
+                    "/users/%1$S/questions/no-answers",
                     StacManClient.join(";", ids)
                 ),
                 false
@@ -742,7 +742,7 @@ public final class UserMethods {
         ub.addParameter("max", max);
         ub.addParameter("order", order);
 
-        return client.createApiTask(Types.Question, ub, "/_users/questions/featured");
+        return client.createApiTask(Types.Question, ub, "/_users/questions/no-answers");
     }
 
     public Future<StacManResponse<Question>> getMyQuestionsWithNoAnswers(String site, String access_token, String filter, Integer page, Integer pagesize, Date fromdate, Date todate, QuestionSort sort, Date mindate, Date maxdate, Integer min, Integer max, Order order)
@@ -756,7 +756,7 @@ public final class UserMethods {
         client.validatePaging(page, pagesize);
         client.validateSortMinMax(sort, mindate, maxdate, min, max);
 
-        ApiUrlBuilder ub = new ApiUrlBuilder("/me/questions/featured", true);
+        ApiUrlBuilder ub = new ApiUrlBuilder("/me/questions/no-answers", true);
 
         ub.addParameter("site", site);
         ub.addParameter("access_token", access_token);
@@ -772,7 +772,7 @@ public final class UserMethods {
         ub.addParameter("max", max);
         ub.addParameter("order", order);
 
-        return client.createApiTask(Types.Question, ub, "/_users/questions/featured");
+        return client.createApiTask(Types.Question, ub, "/_users/questions/no-answers");
     }
 
     public Future<StacManResponse<InboxItem>> getInbox(String site, String access_token, int id, String filter, Integer page, Integer pagesize) {
