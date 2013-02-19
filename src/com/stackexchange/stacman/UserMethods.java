@@ -218,7 +218,7 @@ public final class UserMethods {
         return client.createApiTask(Types.Badge, ub, "/_users/badges");
     }
 
-    Future<StacManResponse<Badge>> getMyBadges(String site, String access_token, String filter, Integer page, Integer pagesize, Date fromdate, Date todate, BadgeUserSort sort, BadgeRank minrank, BadgeRank maxrank, String minname, String maxname, BadgeType mintype, BadgeType maxtype, Date mindate, Date maxdate, Order order)
+    public Future<StacManResponse<Badge>> getMyBadges(String site, String access_token, String filter, Integer page, Integer pagesize, Date fromdate, Date todate, BadgeUserSort sort, BadgeRank minrank, BadgeRank maxrank, String minname, String maxname, BadgeType mintype, BadgeType maxtype, Date mindate, Date maxdate, Order order)
     {
         if(sort == null) {
             sort = BadgeUserSort.Default;
@@ -252,7 +252,7 @@ public final class UserMethods {
         return client.createApiTask(Types.Badge, ub, "/_users/badges");
     }
 
-    Future<StacManResponse<Comment>> getComments(String site, Iterable<Integer> ids, String filter, Integer page, Integer pagesize, Date fromdate, Date todate, CommentSort sort, Date mindate, Date maxdate, Integer min, Integer max, Order order)
+    public Future<StacManResponse<Comment>> getComments(String site, Iterable<Integer> ids, String filter, Integer page, Integer pagesize, Date fromdate, Date todate, CommentSort sort, Date mindate, Date maxdate, Integer min, Integer max, Order order)
     {
         if(sort == null) {
             sort = CommentSort.Default;
@@ -288,7 +288,7 @@ public final class UserMethods {
         return client.createApiTask(Types.Comment, ub, "/_users/comments");
     }
 
-    Future<StacManResponse<Comment>> getMyComments(String site, String access_token, String filter, Integer page, Integer pagesize, Date fromdate, Date todate, CommentSort sort, Date mindate, Date maxdate, Integer min, Integer max, Order order)
+    public Future<StacManResponse<Comment>> getMyComments(String site, String access_token, String filter, Integer page, Integer pagesize, Date fromdate, Date todate, CommentSort sort, Date mindate, Date maxdate, Integer min, Integer max, Order order)
     {
         if(sort == null){
             sort = CommentSort.Default;
@@ -316,6 +316,83 @@ public final class UserMethods {
         ub.addParameter("order", order);
 
         return client.createApiTask(Types.Comment, ub, "/_users/comments");
+    }
+
+    public Future<StacManResponse<Comment>> getCommentsToUser(String site, Integer[] ids, int toid, String filter, Integer page, Integer pagesize, Date fromdate, Date todate, CommentSort sort, Date mindate, Date maxdate, Integer min, Integer max, Order order){
+        return getCommentsToUser(site, StacManClient.toIter(ids), toid, filter, page, pagesize, fromdate, todate, sort, mindate, maxdate, min, max, order);
+    }
+
+    public Future<StacManResponse<Comment>> getCommentsToUser(String site, Iterable<Integer> ids, int toid, String filter, Integer page, Integer pagesize, Date fromdate, Date todate, CommentSort sort, Date mindate, Date maxdate, Integer min, Integer max, Order order)
+    {
+        if(sort == null){
+            sort = CommentSort.Default;
+        }
+
+        client.validateString(site, "site");
+        client.validateEnumerable(ids, "ids");
+        client.validatePaging(page, pagesize);
+        client.validateSortMinMax(sort, mindate, maxdate, min, max);
+
+        ApiUrlBuilder ub =
+            new ApiUrlBuilder(
+                String.format(
+                    "/users/%1$S/comments/%2$d",
+                    StacManClient.join(";", ids),
+                    toid
+                ),
+                false
+            );
+
+        ub.addParameter("site", site);
+        ub.addParameter("filter", filter);
+        ub.addParameter("page", page);
+        ub.addParameter("pagesize", pagesize);
+        ub.addParameter("fromdate", fromdate);
+        ub.addParameter("todate", todate);
+        ub.addParameter("sort", sort);
+        ub.addParameter("min", mindate);
+        ub.addParameter("max", maxdate);
+        ub.addParameter("min", min);
+        ub.addParameter("max", max);
+        ub.addParameter("order", order);
+
+        return client.createApiTask(Types.Comment, ub, "/_users/comments/{toid}");
+    }
+
+    public Future<StacManResponse<Comment>> getMyCommentsToUser(String site, String access_token, int toid, String filter, Integer page, Integer pagesize, Date fromdate, Date todate, CommentSort sort, Date mindate, Date maxdate, Integer min, Integer max, Order order)
+    {
+        if(sort == null){
+            sort = CommentSort.Default;
+        }
+
+        client.validateString(site, "site");
+        client.validateString(access_token, "access_token");
+        client.validatePaging(page, pagesize);
+        client.validateSortMinMax(sort, mindate, maxdate, min, max);
+
+        ApiUrlBuilder ub =
+            new ApiUrlBuilder(
+                String.format(
+                    "/me/comments/%1$d",
+                    toid),
+                true
+            );
+
+        ub.addParameter("site", site);
+        ub.addParameter("access_token", access_token);
+        ub.addParameter("filter", filter);
+        ub.addParameter("page", page);
+        ub.addParameter("pagesize", pagesize);
+        ub.addParameter("fromdate", fromdate);
+        ub.addParameter("todate", todate);
+        ub.addParameter("sort", sort);
+        ub.addParameter("min", mindate);
+        ub.addParameter("max", maxdate);
+        ub.addParameter("min", min);
+        ub.addParameter("max", max);
+        ub.addParameter("order", order);
+
+        return client.createApiTask(Types.Comment, ub, "/_users/comments/{toid}");
     }
 
     public Future<StacManResponse<InboxItem>> getInbox(String site, String access_token, int id, String filter, Integer page, Integer pagesize) {
