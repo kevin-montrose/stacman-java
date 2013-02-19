@@ -4,26 +4,25 @@ package com.stackexchange.stacman;
  * Created with IntelliJ IDEA.
  * User: kmontrose
  * Date: 2/19/13
- * Time: 4:28 PM
+ * Time: 5:26 PM
  * To change this template use File | Settings | File Templates.
  */
-public enum AnswerSort implements ISortType {
-    Activity("date"),
+public enum CommentSort implements ISortType {
     Creation("date"),
     Votes("integer");
 
-    public static final AnswerSort Default = Activity;
+    public static final CommentSort Default = Creation;
 
     private final String type;
 
     public boolean isInteger(){ return type == "integer"; }
     public boolean isDate(){ return type == "date"; }
-    public boolean isString(){ return type == "string"; }
-    public boolean isNone() { return type == "none"; }
+    public boolean isString(){ return false; }
+    public boolean isNone() { return false; }
     public boolean isBadgeType() { return false; }
     public boolean isBadgeRank() { return false; }
 
-    AnswerSort(String type){
+    CommentSort(String type) {
         this.type = type;
     }
 }
