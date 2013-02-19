@@ -636,6 +636,75 @@ public final class UserMethods {
         return client.createApiTask(Types.Question, ub, "/_users/questions");
     }
 
+    public Future<StacManResponse<Question>> getFeaturedQuestions(String site, Integer[] ids, String filter, Integer page, Integer pagesize, Date fromdate, Date todate, QuestionSort sort, Date mindate, Date maxdate, Integer min, Integer max, Order order) {
+        return getFeaturedQuestions(site, StacManClient.toIter(ids), filter, page, pagesize, fromdate, todate, sort, mindate, maxdate, min, max, order);
+    }
+
+    public Future<StacManResponse<Question>> getFeaturedQuestions(String site, Iterable<Integer> ids, String filter, Integer page, Integer pagesize, Date fromdate, Date todate, QuestionSort sort, Date mindate, Date maxdate, Integer min, Integer max, Order order)
+    {
+        if(sort == null){
+            sort = QuestionSort.Default;
+        }
+
+        client.validateString(site, "site");
+        client.validateEnumerable(ids, "ids");
+        client.validatePaging(page, pagesize);
+        client.validateSortMinMax(sort, mindate, maxdate, min, max);
+
+        ApiUrlBuilder ub =
+            new ApiUrlBuilder(
+                String.format(
+                    "/users/%1$S/questions/featured",
+                    StacManClient.join(";", ids)
+                ),
+                false
+            );
+
+        ub.addParameter("site", site);
+        ub.addParameter("filter", filter);
+        ub.addParameter("page", page);
+        ub.addParameter("pagesize", pagesize);
+        ub.addParameter("fromdate", fromdate);
+        ub.addParameter("todate", todate);
+        ub.addParameter("sort", sort);
+        ub.addParameter("min", mindate);
+        ub.addParameter("max", maxdate);
+        ub.addParameter("min", min);
+        ub.addParameter("max", max);
+        ub.addParameter("order", order);
+
+        return client.createApiTask(Types.Question, ub, "/_users/questions/featured");
+    }
+
+    public Future<StacManResponse<Question>> getMyFeaturedQuestions(String site, String access_token, String filter, Integer page, Integer pagesize, Date fromdate, Date todate, QuestionSort sort, Date mindate, Date maxdate, Integer min, Integer max, Order order) {
+        if(sort == null){
+            sort = QuestionSort.Default;
+        }
+
+        client.validateString(site, "site");
+        client.validateString(access_token, "access_token");
+        client.validatePaging(page, pagesize);
+        client.validateSortMinMax(sort, mindate, maxdate, min, max);
+
+        ApiUrlBuilder ub = new ApiUrlBuilder("/me/questions/featured", true);
+
+        ub.addParameter("site", site);
+        ub.addParameter("access_token", access_token);
+        ub.addParameter("filter", filter);
+        ub.addParameter("page", page);
+        ub.addParameter("pagesize", pagesize);
+        ub.addParameter("fromdate", fromdate);
+        ub.addParameter("todate", todate);
+        ub.addParameter("sort", sort);
+        ub.addParameter("min", mindate);
+        ub.addParameter("max", maxdate);
+        ub.addParameter("min", min);
+        ub.addParameter("max", max);
+        ub.addParameter("order", order);
+
+        return client.createApiTask(Types.Question, ub, "/_users/questions/featured");
+    }
+
     public Future<StacManResponse<InboxItem>> getInbox(String site, String access_token, int id, String filter, Integer page, Integer pagesize) {
         client.validateString(site, "site");
         client.validateString(access_token, "access_token");
