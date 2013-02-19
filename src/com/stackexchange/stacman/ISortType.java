@@ -4,6 +4,5 @@ interface ISortType<T> {
     public boolean isInteger();
     public boolean isDate();
     public boolean isString();
-
-    public  T getDefault();
+    public boolean isNone();
 }

@@ -13,8 +13,7 @@ public enum UserSort implements ISortType<UserSort> {
     public boolean isInteger(){ return type == "integer"; }
     public boolean isDate(){ return type == "date"; }
     public boolean isString(){ return type == "string"; }
-
-    public UserSort getDefault() { return Reputation; }
+    public boolean isNone() { return false; }
 
     UserSort(String type) {
         this.type = type;

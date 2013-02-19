@@ -23,6 +23,7 @@ import java.util.zip.GZIPInputStream;
 public final class StacManClient {
     public final AccessTokenMethods accessTokens = new AccessTokenMethods(this);
     public final UserMethods users = new UserMethods(this);
+    public final QuestionMethods questions = new QuestionMethods(this);
 
     private String key;
 
@@ -130,6 +131,17 @@ public final class StacManClient {
     }
 
     static <TSort extends ISortType> void validateSortMinMax(
+            TSort sort,
+            Date mindate,
+            Date maxdate,
+            Integer min,
+            Integer max
+    )
+    {
+        validateSortMinMax(sort, min, max, mindate, maxdate, null, null);
+    }
+
+    static <TSort extends ISortType> void validateSortMinMax(
         TSort sort,
         Integer min,
         Integer max,
@@ -152,6 +164,15 @@ public final class StacManClient {
         }
 
         if(!sort.isString()) {
+            if(minname != null) throw new IllegalArgumentException("minname must be null when sort is "+sort);
+            if(maxname != null) throw new IllegalArgumentException("maxname must be null when sort is "+sort);
+        }
+
+        if(sort.isNone()) {
+            if(min != null) throw new IllegalArgumentException("min must be null when sort is "+sort);
+            if(max != null) throw new IllegalArgumentException("max must be null when sort is "+sort);
+            if(mindate != null) throw new IllegalArgumentException("mindate must be null when sort is "+sort);
+            if(maxdate != null) throw new IllegalArgumentException("maxdate must be null when sort is "+sort);
             if(minname != null) throw new IllegalArgumentException("minname must be null when sort is "+sort);
             if(maxname != null) throw new IllegalArgumentException("maxname must be null when sort is "+sort);
         }
