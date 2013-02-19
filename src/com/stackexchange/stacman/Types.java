@@ -13,4 +13,5 @@ final class Types {
     public static final Type Badge =  new TypeToken<Wrapper<Badge>>() {}.getType();
     public static final Type Comment =  new TypeToken<Wrapper<Comment>>() {}.getType();
     public static final Type Privilege =  new TypeToken<Wrapper<Privilege>>() {}.getType();
+    public static final Type Reputation =  new TypeToken<Wrapper<Reputation>>() {}.getType();
 }
