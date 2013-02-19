@@ -2,6 +2,7 @@ package com.stackexchange.stacman;
 
 import com.google.gson.reflect.TypeToken;
 import com.sun.jmx.remote.util.OrderClassLoaders;
+import com.sun.xml.internal.bind.v2.runtime.output.ForkXmlOutput;
 
 import java.lang.reflect.Type;
 import java.util.Date;
@@ -117,5 +118,42 @@ public final class UserMethods {
         ub.addParameter("order", order);
 
         return client.createApiTask(Types.User, ub, "/_users");
+    }
+
+    public Future<StacManResponse<InboxItem>> getInbox(String site, String access_token, int id, String filter, Integer page, Integer pagesize) {
+        client.validateString(site, "site");
+        client.validateString(access_token, "access_token");
+        client.validatePaging(page, pagesize);
+
+        ApiUrlBuilder ub =
+            new ApiUrlBuilder(
+                String.format("/users/%1$S/inbox", id),
+                true
+            );
+
+        ub.addParameter("site", site);
+        ub.addParameter("access_token", access_token);
+        ub.addParameter("filter", filter);
+        ub.addParameter("page", page);
+        ub.addParameter("pagesize", pagesize);
+
+        return client.createApiTask(Types.InboxItem, ub, "/_users/inbox");
+    }
+
+    public Future<StacManResponse<InboxItem>> getMyInbox(String site, String access_token, String filter, Integer page, Integer pagesize)
+    {
+        client.validateString(site, "site");
+        client.validateString(access_token, "access_token");
+        client.validatePaging(page, pagesize);
+
+        ApiUrlBuilder ub = new ApiUrlBuilder("/me/inbox", true);
+
+        ub.addParameter("site", site);
+        ub.addParameter("access_token", access_token);
+        ub.addParameter("filter", filter);
+        ub.addParameter("page", page);
+        ub.addParameter("pagesize", pagesize);
+
+        return client.createApiTask(Types.InboxItem, ub, "/_users/inbox");
     }
 }
