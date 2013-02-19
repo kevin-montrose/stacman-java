@@ -535,6 +535,38 @@ public final class UserMethods {
         return client.createApiTask(Types.Comment, ub, "/_users/mentioned");
     }
 
+    public Future<StacManResponse<Privilege>> getPrivileges(String site, int id, String filter, Integer page, Integer pagesize)
+    {
+        client.validateString(site, "site");
+        client.validatePaging(page, pagesize);
+
+        ApiUrlBuilder ub = new ApiUrlBuilder(String.format("/users/%1$d/privileges", id), false);
+
+        ub.addParameter("site", site);
+        ub.addParameter("filter", filter);
+        ub.addParameter("page", page);
+        ub.addParameter("pagesize", pagesize);
+
+        return client.createApiTask(Types.Privilege, ub, "/_users/privileges");
+    }
+
+    public Future<StacManResponse<Privilege>> getMyPrivileges(String site, String access_token, String filter, Integer page, Integer pagesize)
+    {
+        client.validateString(site, "site");
+        client.validateString(access_token, "access_token");
+        client.validatePaging(page, pagesize);
+
+        ApiUrlBuilder ub = new ApiUrlBuilder("/me/privileges", true);
+
+        ub.addParameter("site", site);
+        ub.addParameter("access_token", access_token);
+        ub.addParameter("filter", filter);
+        ub.addParameter("page", page);
+        ub.addParameter("pagesize", pagesize);
+
+        return client.createApiTask(Types.Privilege, ub, "/_users/privileges");
+    }
+
     public Future<StacManResponse<InboxItem>> getInbox(String site, String access_token, int id, String filter, Integer page, Integer pagesize) {
         client.validateString(site, "site");
         client.validateString(access_token, "access_token");
