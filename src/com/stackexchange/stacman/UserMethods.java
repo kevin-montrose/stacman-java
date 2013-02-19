@@ -114,11 +114,11 @@ public final class UserMethods {
         return client.createApiTask(Types.User, ub, "/_users");
     }
 
-    public Future<StacManResponse<Answer>> GetAnswers(String site, Integer[] ids, String filter, Integer page, Integer pagesize, Date fromdate, Date todate, AnswerSort sort, Date mindate, Date maxdate, Integer min, Integer max, Order order) {
-        return GetAnswers(site, StacManClient.toIter(ids), filter, page, pagesize, fromdate, todate, sort, mindate, maxdate, min, max, order);
+    public Future<StacManResponse<Answer>> getAnswers(String site, Integer[] ids, String filter, Integer page, Integer pagesize, Date fromdate, Date todate, AnswerSort sort, Date mindate, Date maxdate, Integer min, Integer max, Order order) {
+        return getAnswers(site, StacManClient.toIter(ids), filter, page, pagesize, fromdate, todate, sort, mindate, maxdate, min, max, order);
     }
 
-    public Future<StacManResponse<Answer>> GetAnswers(String site, Iterable<Integer> ids, String filter, Integer page, Integer pagesize, Date fromdate, Date todate, AnswerSort sort, Date mindate, Date maxdate, Integer min, Integer max, Order order) {
+    public Future<StacManResponse<Answer>> getAnswers(String site, Iterable<Integer> ids, String filter, Integer page, Integer pagesize, Date fromdate, Date todate, AnswerSort sort, Date mindate, Date maxdate, Integer min, Integer max, Order order) {
         client.validateString(site, "site");
         client.validateEnumerable(ids, "ids");
         client.validatePaging(page, pagesize);
@@ -147,6 +147,67 @@ public final class UserMethods {
         ub.addParameter("order", order);
 
         return client.createApiTask(Types.Answer, ub, "/_users/answers");
+    }
+
+    public Future<StacManResponse<Answer>> getMyAnswers(String site, String access_token, String filter, Integer page, Integer pagesize, Date fromdate, Date todate, AnswerSort sort, Date mindate, Date maxdate, Integer min, Integer max, Order order) {
+        client.validateString(site, "site");
+        client.validateString(access_token, "access_token");
+        client.validatePaging(page, pagesize);
+        client.validateSortMinMax(sort, mindate, maxdate, min, max);
+
+        ApiUrlBuilder ub = new ApiUrlBuilder("/me/answers", true);
+
+        ub.addParameter("site", site);
+        ub.addParameter("access_token", access_token);
+        ub.addParameter("filter", filter);
+        ub.addParameter("page", page);
+        ub.addParameter("pagesize", pagesize);
+        ub.addParameter("fromdate", fromdate);
+        ub.addParameter("todate", todate);
+        ub.addParameter("sort", sort);
+        ub.addParameter("min", mindate);
+        ub.addParameter("max", maxdate);
+        ub.addParameter("min", min);
+        ub.addParameter("max", max);
+        ub.addParameter("order", order);
+
+        return client.createApiTask(Types.Answer, ub, "/_users/answers");
+    }
+
+    public Future<StacManResponse<Badge>> getBadges(String site, Integer[] ids, String filter, Integer page, Integer pagesize, Date fromdate, Date todate, BadgeUserSort sort, BadgeRank minrank, BadgeRank maxrank, String minname, String maxname, BadgeType mintype, BadgeType maxtype, Date mindate, Date maxdate, Order order) {
+        return getBadges(site, StacManClient.toIter(ids), filter, page, pagesize, fromdate, todate, sort, minrank, maxrank, minname, maxname, mintype, maxtype, mindate, maxdate, order);
+    }
+
+    public Future<StacManResponse<Badge>> getBadges(String site, Iterable<Integer> ids, String filter, Integer page, Integer pagesize, Date fromdate, Date todate, BadgeUserSort sort, BadgeRank minrank, BadgeRank maxrank, String minname, String maxname, BadgeType mintype, BadgeType maxtype, Date mindate, Date maxdate, Order order) {
+        if(sort == null) {
+            sort = BadgeUserSort.Default;
+        }
+
+        client.validateString(site, "site");
+        client.validateEnumerable(ids, "ids");
+        client.validatePaging(page, pagesize);
+        client.validateSortMinMax(sort, minrank, maxrank, minname, maxname, mintype, maxtype, mindate, maxdate);
+
+        ApiUrlBuilder ub = new ApiUrlBuilder(String.format("/users/%1$S/badges", StacManClient.join(";", ids)), false);
+
+        ub.addParameter("site", site);
+        ub.addParameter("filter", filter);
+        ub.addParameter("page", page);
+        ub.addParameter("pagesize", pagesize);
+        ub.addParameter("fromdate", fromdate);
+        ub.addParameter("todate", todate);
+        ub.addParameter("sort", sort);
+        ub.addParameter("min", minrank);
+        ub.addParameter("max", maxrank);
+        ub.addParameter("min", minname);
+        ub.addParameter("max", maxname);
+        ub.addParameter("min", mintype);
+        ub.addParameter("max", maxtype);
+        ub.addParameter("min", mindate);
+        ub.addParameter("max", maxdate);
+        ub.addParameter("order", order);
+
+        return client.createApiTask(Types.Badge, ub, "/_users/badges");
     }
 
     public Future<StacManResponse<InboxItem>> getInbox(String site, String access_token, int id, String filter, Integer page, Integer pagesize) {

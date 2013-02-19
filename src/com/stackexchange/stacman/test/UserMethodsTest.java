@@ -1,8 +1,6 @@
 package com.stackexchange.stacman.test;
 
-import com.stackexchange.stacman.StacManClient;
-import com.stackexchange.stacman.StacManResponse;
-import com.stackexchange.stacman.User;
+import com.stackexchange.stacman.*;
 import org.junit.Test;
 
 import java.util.concurrent.Future;
@@ -30,5 +28,22 @@ public class UserMethodsTest {
         User jon = users.getData().getItems()[0];
 
         if(!jon.getDisplayName().equals("Jon Skeet")) throw new Exception();
+    }
+
+    @Test
+    public void testBadges() throws Exception {
+        StacManClient client = new StacManClient();
+        Future<StacManResponse<Badge>> task = client.users.getBadges("stackoverflow", new Integer[] { 22656 }, "default", null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+
+        StacManResponse<Badge> badges = task.get();
+
+        if(!badges.getSuccess()) throw new Exception();
+        if(badges.getData() == null) throw new Exception();
+        if(badges.getData().getItems() == null) throw new Exception();
+        if(badges.getData().getItems().length == 0) throw new Exception();
+
+        Badge jon = badges.getData().getItems()[0];
+
+        if(jon.getName() == null) throw new Exception();
     }
 }

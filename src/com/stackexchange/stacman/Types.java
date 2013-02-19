@@ -10,4 +10,5 @@ final class Types {
     public static final Type Question = new TypeToken<Wrapper<Question>>() {}.getType();
     public static final Type InboxItem = new TypeToken<Wrapper<InboxItem>>() {}.getType();
     public static final Type Answer = new TypeToken<Wrapper<Answer>>() {}.getType();
+    public static final Type Badge =  new TypeToken<Wrapper<Badge>>() {}.getType();
 }

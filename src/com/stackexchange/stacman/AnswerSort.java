@@ -18,6 +18,8 @@ public enum AnswerSort implements ISortType {
     public boolean isDate(){ return type == "date"; }
     public boolean isString(){ return type == "string"; }
     public boolean isNone() { return type == "none"; }
+    public boolean isBadgeType() { return false; }
+    public boolean isBadgeRank() { return false; }
 
     AnswerSort(String type){
         this.type = type;

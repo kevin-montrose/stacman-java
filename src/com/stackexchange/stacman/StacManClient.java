@@ -173,6 +173,41 @@ public final class StacManClient {
         }
     }
 
+    static <TSort extends ISortType> void validateSortMinMax(
+            TSort sort,
+            BadgeRank minrank,
+            BadgeRank maxrank,
+            String minname,
+            String maxname,
+            BadgeType mintype,
+            BadgeType maxtype,
+            Date mindate,
+            Date maxdate
+    )
+    {
+        if(sort == null) throw new IllegalArgumentException("sort cannot be null");
+
+        if(!sort.isDate()){
+            if(mindate != null) throw new IllegalArgumentException("mindate must be null when sort is "+sort);
+            if(maxdate != null) throw new IllegalArgumentException("maxdate must be null when sort is "+sort);
+        }
+
+        if(!sort.isString()) {
+            if(minname != null) throw new IllegalArgumentException("minname must be null when sort is "+sort);
+            if(maxname != null) throw new IllegalArgumentException("maxname must be null when sort is "+sort);
+        }
+
+        if(!sort.isBadgeRank()) {
+            if(minrank != null) throw new IllegalArgumentException("minrank must be null when sort is "+sort);
+            if(maxrank != null) throw new IllegalArgumentException("maxrank must be null when sort is "+sort);
+        }
+
+        if(!sort.isBadgeType()) {
+            if(mintype != null) throw new IllegalArgumentException("mintype must be null when sort is "+sort);
+            if(maxtype != null) throw new IllegalArgumentException("maxtype must be null when sort is "+sort);
+        }
+    }
+
     static <T> String join(String joiner, Iterable<T> parts) {
         String ret = "";
 
