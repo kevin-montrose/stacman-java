@@ -157,14 +157,14 @@ public final class StacManClient {
         }
     }
 
-    static String join(String joiner, Iterable<String> parts) {
+    static <T> String join(String joiner, Iterable<T> parts) {
         String ret = "";
 
         boolean first = true;
-        for(String p : parts) {
+        for(T p : parts) {
             if(!first) ret += joiner;
 
-            ret += p;
+            ret += p.toString();
             first = false;
         }
 
