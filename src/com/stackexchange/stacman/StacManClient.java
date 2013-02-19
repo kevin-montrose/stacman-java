@@ -21,8 +21,10 @@ import java.util.zip.GZIPInputStream;
  * Client for Stack Exchange API v2
  */
 public final class StacManClient {
+    public final AccessTokenMethods accessTokens = new AccessTokenMethods(this);
+    public final UserMethods users = new UserMethods(this);
+
     private String key;
-    private HashMap<String, Date> backoffUntil = new HashMap<String, Date>();
 
     private int apiTimeoutMs;
     public int getApiTimeoutMs() { return apiTimeoutMs; }
@@ -36,10 +38,6 @@ public final class StacManClient {
     public boolean getRespectBackoffs() { return respectBackoffs; }
     public void setRespectBackoffs(boolean doRespectBackoffs) { respectBackoffs = doRespectBackoffs; }
 
-    public final AccessTokenMethods accessTokens = new AccessTokenMethods(this);
-
-    private final AtomicInteger activeRequests = new AtomicInteger();
-
     private ExecutorService executor = Executors.newFixedThreadPool(30);
 
     public StacManClient() { this(null); }
@@ -50,10 +48,11 @@ public final class StacManClient {
         setRespectBackoffs(true);
     }
 
-    <T> Future<StacManResponse<T>> createApiTask(ApiUrlBuilder ub, String backoffKey) {
+    <T> Future<StacManResponse<T>> createApiTask(Type type, ApiUrlBuilder ub, String backoffKey) {
         ub.addParameter("key", key);
 
         final String urlFinal = ub.toString();
+        final Type typeFinal = type;
 
         Callable<StacManResponse<T>> background =
                 new Callable<StacManResponse<T>>() {
@@ -85,7 +84,7 @@ public final class StacManClient {
 
                         try
                         {
-                            Wrapper<T> wrapper =  parseApiResponse(sb.toString());
+                            Wrapper<T> wrapper =  parseApiResponse(sb.toString(), typeFinal);
 
                             return new StacManResponse<T>(wrapper, null);
                         }catch(Exception e){
@@ -97,10 +96,10 @@ public final class StacManClient {
         return executor.submit(background);
     }
 
-    private <T> Wrapper<T> parseApiResponse(String json) {
+    private <T> Wrapper<T> parseApiResponse(String json, Type type) {
         Gson gson = new Gson();
 
-        Wrapper<T> x = gson.fromJson(json, (new Wrapper<T>()).getClass());
+        Wrapper<T> x = gson.fromJson(json, type);
 
         return x;
     }
@@ -119,6 +118,43 @@ public final class StacManClient {
 
         if (pagesize != null && pagesize < 0)
             throw new IllegalArgumentException("pagesize cannot be negative");
+    }
+
+    static void validateString(String value, String paramName)
+    {
+        if (value == null)
+            throw new IllegalArgumentException(paramName);
+
+        if (value.equals(""))
+            throw new IllegalArgumentException(paramName + " cannot be empty");
+    }
+
+    static <TSort extends ISortType> void validateSortMinMax(
+        TSort sort,
+        Integer min,
+        Integer max,
+        Date mindate,
+        Date maxdate,
+        String minname,
+        String maxname
+    )
+    {
+        if(sort == null) throw new IllegalArgumentException("sort cannot be null");
+
+        if(!sort.isDate()){
+            if(mindate != null) throw new IllegalArgumentException("mindate must be null when sort is "+sort);
+            if(maxdate != null) throw new IllegalArgumentException("maxdate must be null when sort is "+sort);
+        }
+
+        if(!sort.isInteger()){
+            if(min != null) throw new IllegalArgumentException("min must be null when sort is "+sort);
+            if(max != null) throw new IllegalArgumentException("max must be null when sort is "+sort);
+        }
+
+        if(!sort.isString()) {
+            if(minname != null) throw new IllegalArgumentException("minname must be null when sort is "+sort);
+            if(maxname != null) throw new IllegalArgumentException("maxname must be null when sort is "+sort);
+        }
     }
 
     static String join(String joiner, Iterable<String> parts) {

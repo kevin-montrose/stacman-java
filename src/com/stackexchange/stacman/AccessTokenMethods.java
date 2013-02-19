@@ -34,7 +34,7 @@ public final class AccessTokenMethods {
         ub.addParameter("page", page);
         ub.addParameter("pagesize", pageSize);
 
-        return client.createApiTask(ub, "/access-tokens/{accessToken}/invalidate");
+        return client.createApiTask(Types.AccessToken, ub, "/access-tokens/{accessToken}/invalidate");
     }
 
     public Future<StacManResponse<AccessToken>> get(String[] accessTokens, String filter, Integer page, Integer pageSize) {
@@ -58,6 +58,6 @@ public final class AccessTokenMethods {
         ub.addParameter("page", page);
         ub.addParameter("pagesize", pageSize);
 
-        return client.createApiTask(ub, "/access-tokens/{accessTokens}");
+        return client.createApiTask(Types.AccessToken, ub, "/access-tokens/{accessTokens}");
     }
 }

@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * StacMan Wrapper, corresponding to Stack Exchange API v2's common wrapper type
  * http://api.stackexchange.com/docs/wrapper
  */
-class Wrapper<T> {
+public class Wrapper<T> {
     private Integer backoff;
     public Integer getBackoff() { return backoff; }
 
