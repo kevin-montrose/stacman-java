@@ -25,6 +25,7 @@ public final class StacManClient {
     public final EventMethods events = new EventMethods(this);
     public final FilterMethods filters = new FilterMethods(this);
     public final InboxMethods inbox = new InboxMethods(this);
+    public final InfoMethods info = new InfoMethods(this);
     public final QuestionMethods questions = new QuestionMethods(this);
     public final UserMethods users = new UserMethods(this);
 
