@@ -1169,6 +1169,47 @@ public final class UserMethods {
         return client.createApiTask(Types.Question, ub, "/_users/tags/{tags}/top-questions");
     }
 
+    public Future<StacManResponse<UserTimeline>> getTimelines(String site, Integer[] ids, String filter, Integer page, Integer pagesize, Date fromdate, Date todate) {
+        return getTimelines(site, StacManClient.toIter(ids), filter, page, pagesize, fromdate, todate);
+    }
+
+    public Future<StacManResponse<UserTimeline>> getTimelines(String site, Iterable<Integer> ids, String filter, Integer page, Integer pagesize, Date fromdate, Date todate)
+    {
+        client.validateString(site, "site");
+        client.validateEnumerable(ids, "ids");
+        client.validatePaging(page, pagesize);
+
+        ApiUrlBuilder ub = new ApiUrlBuilder(String.format("/users/%1$S/timeline", StacManClient.join(";", ids)), false);
+
+        ub.addParameter("site", site);
+        ub.addParameter("filter", filter);
+        ub.addParameter("page", page);
+        ub.addParameter("pagesize", pagesize);
+        ub.addParameter("fromdate", fromdate);
+        ub.addParameter("todate", todate);
+
+        return client.createApiTask(Types.UserTimeline, ub, "/_users/timeline");
+    }
+
+    public Future<StacManResponse<UserTimeline>> getMyTimeline(String site, String access_token, String filter, Integer page, Integer pagesize, Date fromdate, Date todate)
+    {
+        client.validateString(site, "site");
+        client.validateString(access_token, "access_token");
+        client.validatePaging(page, pagesize);
+
+        ApiUrlBuilder ub = new ApiUrlBuilder("/me/timeline", true);
+
+        ub.addParameter("site", site);
+        ub.addParameter("access_token", access_token);
+        ub.addParameter("filter", filter);
+        ub.addParameter("page", page);
+        ub.addParameter("pagesize", pagesize);
+        ub.addParameter("fromdate", fromdate);
+        ub.addParameter("todate", todate);
+
+        return client.createApiTask(Types.UserTimeline, ub, "/_users/timeline");
+    }
+
     public Future<StacManResponse<InboxItem>> getInbox(String site, String access_token, int id, String filter, Integer page, Integer pagesize) {
         client.validateString(site, "site");
         client.validateString(access_token, "access_token");
