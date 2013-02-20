@@ -24,4 +24,6 @@ final class Types {
     public static final Type Event =  new TypeToken<Wrapper<Event>>() {}.getType();
     public static final Type Filter =  new TypeToken<Wrapper<Filter>>() {}.getType();
     public static final Type Info =  new TypeToken<Wrapper<Info>>() {}.getType();
+    public static final Type Post =  new TypeToken<Wrapper<Post>>() {}.getType();
+    public static final Type Revision =  new TypeToken<Wrapper<Revision>>() {}.getType();
 }
