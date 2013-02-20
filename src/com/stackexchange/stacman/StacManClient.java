@@ -17,9 +17,10 @@ import java.util.zip.GZIPInputStream;
  */
 public final class StacManClient {
     public final AccessTokenMethods accessTokens = new AccessTokenMethods(this);
+    public final AnswerMethods answers = new AnswerMethods(this);
     public final ApplicationMethods applications = new ApplicationMethods(this);
     public final BadgeMethods badges = new BadgeMethods(this);
-    public final AnswerMethods answers = new AnswerMethods(this);
+    public final InboxMethods inbox = new InboxMethods(this);
     public final QuestionMethods questions = new QuestionMethods(this);
     public final UserMethods users = new UserMethods(this);
 
