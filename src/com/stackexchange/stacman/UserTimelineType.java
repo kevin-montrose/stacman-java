@@ -1,6 +1,6 @@
 package com.stackexchange.stacman;
 
-public enum TimelineType {
+public enum UserTimelineType {
     Commented,
     Asked,
     Answered,

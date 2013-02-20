@@ -28,7 +28,7 @@ public final class UserTimeline {
     public Integer getSuggestedEditId() { return suggested_edit_id; }
 
     private String timeline_type;
-    public TimelineType getTimelineType() { return TimelineType.valueOf(timeline_type); }
+    public UserTimelineType getTimelineType() { return UserTimelineType.valueOf(timeline_type); }
 
     private String title;
     public String getTitle() { return title; }
