@@ -1,6 +1,6 @@
 package com.stackexchange.stacman;
 
-public class TagScore {
+public final class TagScore {
     private int post_count;
     public int getPostCount(){return post_count;}
 

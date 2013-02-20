@@ -28,6 +28,7 @@ public class UserMethodsTest {
         User jon = users.getData().getItems()[0];
 
         if(!jon.getDisplayName().equals("Jon Skeet")) throw new Exception();
+        if(jon.getUserType() != UserType.Registered) throw new Exception();
     }
 
     @Test
