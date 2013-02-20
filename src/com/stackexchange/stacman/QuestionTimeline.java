@@ -26,7 +26,7 @@ public final class QuestionTimeline {
     public UUID getRevisionGuid() { return UUID.fromString(revision_guid); }
 
     private String timeline_type;
-    public QuestionTimelineType getTimelineType() { return QuestionTimelineType.valueOf(timeline_type); }
+    public QuestionTimelineType getTimelineType() { return StacManClient.parseEnum(QuestionTimelineType.class, timeline_type); }
 
     private Integer up_vote_count;
     public Integer getUpVoteCount() { return up_vote_count; }

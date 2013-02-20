@@ -22,13 +22,13 @@ public final class UserTimeline {
     public Integer getPostId() { return post_id; }
 
     private String post_type;
-    public PostType getPostType() { return PostType.valueOf(post_type); }
+    public PostType getPostType() { return StacManClient.parseEnum(PostType.class, post_type); }
 
     private Integer suggested_edit_id;
     public Integer getSuggestedEditId() { return suggested_edit_id; }
 
     private String timeline_type;
-    public UserTimelineType getTimelineType() { return UserTimelineType.valueOf(timeline_type); }
+    public UserTimelineType getTimelineType() { return StacManClient.parseEnum(UserTimelineType.class, timeline_type); }
 
     private String title;
     public String getTitle() { return title; }

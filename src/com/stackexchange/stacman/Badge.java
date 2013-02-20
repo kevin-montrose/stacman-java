@@ -14,7 +14,7 @@ public final class Badge {
     public int getBadgeId(){return badge_id;}
 
     private String badge_type;
-    public BadgeType getBadgeType() { return BadgeType.valueOf(badge_type); }
+    public BadgeType getBadgeType() { return StacManClient.parseEnum(BadgeType.class, badge_type); }
 
     private String description;
     public String getDescription() { return description; }
@@ -26,7 +26,7 @@ public final class Badge {
     public String getName() { return name; }
 
     private String rank;
-    public BadgeRank getRank() { return BadgeRank.valueOf(rank); }
+    public BadgeRank getRank() { return StacManClient.parseEnum(BadgeRank.class, rank); }
 
     private ShallowUser user;
     private ShallowUser getUser() { return user; }

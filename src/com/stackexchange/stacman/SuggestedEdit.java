@@ -19,7 +19,7 @@ public final class SuggestedEdit {
     public int getPostId() { return post_id; }
 
     private String post_type;
-    public PostType getPostType() { return PostType.valueOf(post_type); }
+    public PostType getPostType() { return StacManClient.parseEnum(PostType.class, post_type); }
 
     private ShallowUser proposing_user;
     public ShallowUser getProposingUser() { return proposing_user; }

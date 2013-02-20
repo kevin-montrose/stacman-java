@@ -34,5 +34,5 @@ public final class NetworkUser {
     public int getUserId() { return user_id; }
 
     private String user_type;
-    public UserType getUserType() { return UserType.valueOf(user_type); }
+    public UserType getUserType() { return StacManClient.parseEnum(UserType.class, user_type); }
 }

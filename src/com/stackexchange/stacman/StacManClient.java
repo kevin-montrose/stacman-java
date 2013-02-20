@@ -337,4 +337,33 @@ public final class StacManClient {
 
         return asIter;
     }
+
+    static <T extends Enum<T>> T parseEnum(Class<T> enumClass, String enumStr) {
+        T[] vals = enumClass.getEnumConstants();
+
+        String enumName = "";
+        boolean capitalizeNext = true;
+
+
+        for(int i = 0; i < enumStr.length(); i++) {
+            char c = enumStr.charAt(i);
+            if(capitalizeNext){
+                c = Character.toUpperCase(c);
+                capitalizeNext = false;
+            }
+
+            if(c == '_') {
+                capitalizeNext=true;
+                continue;
+            }
+
+            enumName += c;
+        }
+
+        for(int i =0; i < vals.length; i++){
+            if(vals[i].toString().equals(enumName)) return vals[i];
+        }
+
+        throw new RuntimeException("Failed finding" + enumName);
+    }
 }

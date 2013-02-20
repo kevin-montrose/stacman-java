@@ -17,7 +17,7 @@ public final class Reputation {
     public int getPostId() { return post_id; }
 
     private String post_type;
-    public PostType getPostType() { return PostType.valueOf(post_type); }
+    public PostType getPostType() { return StacManClient.parseEnum(PostType.class, post_type); }
 
     private int reputation_change;
     public int getReputationChange() { return reputation_change; }
@@ -29,5 +29,5 @@ public final class Reputation {
     public int getUserId() { return user_id; }
 
     private String vote_type;
-    public VoteType getVoteType() { return VoteType.valueOf(vote_type); }
+    public VoteType getVoteType() { return StacManClient.parseEnum(VoteType.class, vote_type); }
 }

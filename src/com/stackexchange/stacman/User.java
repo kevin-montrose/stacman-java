@@ -77,7 +77,7 @@ public final class User {
     public int getUserId() { return user_id; }
 
     private String user_type;
-    public UserType getUserType() { return UserType.valueOf(user_type); }
+    public UserType getUserType() { return StacManClient.parseEnum(UserType.class, user_type); }
 
     private int view_count;
     public int getViewCount(){ return view_count; }

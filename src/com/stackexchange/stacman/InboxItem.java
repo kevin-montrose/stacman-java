@@ -23,7 +23,7 @@ public final class InboxItem {
     public boolean  getIsUnread() { return is_unread; }
 
     private String item_type;
-    public ItemType getItemType() { return ItemType.valueOf(item_type); }
+    public ItemType getItemType() { return StacManClient.parseEnum(ItemType.class, item_type); }
 
     private String link;
     public String getLink() { return link; }

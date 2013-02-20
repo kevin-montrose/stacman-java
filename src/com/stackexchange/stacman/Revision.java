@@ -29,7 +29,7 @@ public final class Revision {
     public int getPostId(){return post_id;}
 
     private String post_type;
-    public PostType getPostType(){return PostType.valueOf(post_type);}
+    public PostType getPostType(){return StacManClient.parseEnum(PostType.class, post_type); }
 
     private String revision_guid;
     public UUID getRevisionGuid(){return UUID.fromString(revision_guid);}
@@ -38,7 +38,7 @@ public final class Revision {
     public int getRevisionNumber() {return revision_number; }
 
     private String revision_type;
-    public RevisionType getRevisionType(){return RevisionType.valueOf(revision_type);}
+    public RevisionType getRevisionType(){return StacManClient.parseEnum(RevisionType.class, revision_type); }
 
     private boolean set_community_wiki;
     public boolean getSetCommunityWiki(){return set_community_wiki;}

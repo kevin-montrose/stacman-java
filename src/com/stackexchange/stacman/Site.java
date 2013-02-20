@@ -44,7 +44,7 @@ public final class Site {
     public RelatedSite[] getRelatedSite() { return related_site; }
 
     private String site_state;
-    public SiteState getSiteState() { return SiteState.valueOf(site_state); }
+    public SiteState getSiteState() { return StacManClient.parseEnum(SiteState.class, site_state); }
 
     private String site_type;
     public String getSiteType() { return site_type; }

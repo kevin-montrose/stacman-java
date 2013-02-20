@@ -10,7 +10,7 @@ public final class Event {
     public int getEventId() { return event_id; }
 
     private String event_type;
-    public EventType getEventType() { return EventType.valueOf(event_type); }
+    public EventType getEventType() { return StacManClient.parseEnum(EventType.class, event_type); }
 
     private String excerpt;
     public String getExcerpt() { return excerpt; }

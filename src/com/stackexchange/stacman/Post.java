@@ -28,7 +28,7 @@ public final class Post {
     public int getPostId(){return post_id; }
 
     private String post_type;
-    public PostType getPostType(){return PostType.valueOf(post_type);}
+    public PostType getPostType(){return StacManClient.parseEnum(PostType.class, post_type); }
 
     private int score;
     public int getScore(){return score;}

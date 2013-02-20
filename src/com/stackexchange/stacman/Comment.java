@@ -29,7 +29,7 @@ public final class Comment {
     public int getPostId() { return post_id; }
 
     private String post_type;
-    public PostType getPostType() { return PostType.valueOf(post_type); }
+    public PostType getPostType() { return StacManClient.parseEnum(PostType.class, post_type);}
 
     private ShallowUser reply_to_user;
     public ShallowUser getReplyToUser() { return reply_to_user; }

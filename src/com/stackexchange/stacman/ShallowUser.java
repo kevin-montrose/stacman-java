@@ -24,5 +24,5 @@ public final class ShallowUser {
     public Integer getUserId() { return user_id; }
 
     private String user_type;
-    public UserType getUserType() { return UserType.valueOf(user_type); }
+    public UserType getUserType() { return StacManClient.parseEnum(UserType.class, user_type); }
 }

@@ -5,7 +5,7 @@ public final class Filter {
     public String getFilterName() { return filter; }
 
     private String filter_type;
-    public FilterType getFilterType() { return FilterType.valueOf(filter_type); }
+    public FilterType getFilterType() { return StacManClient.parseEnum(FilterType.class, filter_type); }
 
     private String[] included_fields;
     public String[] getIncludedFields() { return included_fields; }
