@@ -22,4 +22,5 @@ final class Types {
     public static final Type QuestionTimeline =  new TypeToken<Wrapper<QuestionTimeline>>() {}.getType();
     public static final Type Error =  new TypeToken<Wrapper<Error>>() {}.getType();
     public static final Type Event =  new TypeToken<Wrapper<Event>>() {}.getType();
+    public static final Type Filter =  new TypeToken<Wrapper<Filter>>() {}.getType();
 }
