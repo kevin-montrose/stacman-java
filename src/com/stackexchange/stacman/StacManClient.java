@@ -21,6 +21,7 @@ public final class StacManClient {
     public final ApplicationMethods applications = new ApplicationMethods(this);
     public final BadgeMethods badges = new BadgeMethods(this);
     public final CommentMethods comments = new CommentMethods(this);
+    public final ErrorMethods errors = new ErrorMethods(this);
     public final InboxMethods inbox = new InboxMethods(this);
     public final QuestionMethods questions = new QuestionMethods(this);
     public final UserMethods users = new UserMethods(this);

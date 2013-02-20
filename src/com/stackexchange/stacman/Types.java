@@ -20,4 +20,5 @@ final class Types {
     public static final Type TopTag =  new TypeToken<Wrapper<TopTag>>() {}.getType();
     public static final Type NetworkUser =  new TypeToken<Wrapper<NetworkUser>>() {}.getType();
     public static final Type QuestionTimeline =  new TypeToken<Wrapper<QuestionTimeline>>() {}.getType();
+    public static final Type Error =  new TypeToken<Wrapper<Error>>() {}.getType();
 }

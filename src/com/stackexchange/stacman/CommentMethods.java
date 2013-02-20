@@ -38,6 +38,10 @@ public final class CommentMethods {
         return client.createApiTask(Types.Comment, ub, "/comments");
     }
 
+    public Future<StacManResponse<Comment>> getByIds(String site, Integer[] ids, String filter, Integer page, Integer pagesize, Date fromdate, Date todate, CommentSort sort, Date mindate, Date maxdate, Integer min, Integer max, Order order) {
+        return getByIds(site, StacManClient.toIter(ids), filter, page, pagesize, fromdate, todate, sort, mindate, maxdate, min, max, order);
+    }
+
     public Future<StacManResponse<Comment>> getByIds(String site, Iterable<Integer> ids, String filter, Integer page, Integer pagesize, Date fromdate, Date todate, CommentSort sort, Date mindate, Date maxdate, Integer min, Integer max, Order order)
     {
         if(sort == null){
