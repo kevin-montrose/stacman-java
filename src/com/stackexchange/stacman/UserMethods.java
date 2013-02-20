@@ -1,4 +1,6 @@
 package com.stackexchange.stacman;
+import sun.reflect.generics.tree.TypeSignature;
+
 import java.util.Date;
 import java.util.concurrent.Future;
 
@@ -1341,7 +1343,7 @@ public final class UserMethods {
 
         ApiUrlBuilder ub =
             new ApiUrlBuilder(
-                String.format("/users/%1$S/inbox", id),
+                String.format("/users/%1$d/inbox", id),
                 true
             );
 
@@ -1369,5 +1371,41 @@ public final class UserMethods {
         ub.addParameter("pagesize", pagesize);
 
         return client.createApiTask(Types.InboxItem, ub, "/_users/inbox");
+    }
+
+    public Future<StacManResponse<InboxItem>> getInboxUnread(String site, String access_token, int id, String filter, Integer page, Integer pagesize, Date since)
+    {
+        client.validateString(site, "site");
+        client.validateString(access_token, "access_token");
+        client.validatePaging(page, pagesize);
+
+        ApiUrlBuilder ub = new ApiUrlBuilder(String.format("/users/%1$d/inbox/unread", id), true);
+
+        ub.addParameter("site", site);
+        ub.addParameter("access_token", access_token);
+        ub.addParameter("filter", filter);
+        ub.addParameter("page", page);
+        ub.addParameter("pagesize", pagesize);
+        ub.addParameter("since", since);
+
+        return client.createApiTask(Types.InboxItem, ub, "/_users/inbox/unread");
+    }
+
+    public Future<StacManResponse<InboxItem>> getMyInboxUnread(String site, String access_token, String filter, Integer page, Integer pagesize, Date since)
+    {
+        client.validateString(site, "site");
+        client.validateString(access_token, "access_token");
+        client.validatePaging(page, pagesize);
+
+        ApiUrlBuilder ub = new ApiUrlBuilder("/me/inbox/unread", true);
+
+        ub.addParameter("site", site);
+        ub.addParameter("access_token", access_token);
+        ub.addParameter("filter", filter);
+        ub.addParameter("page", page);
+        ub.addParameter("pagesize", pagesize);
+        ub.addParameter("since", since);
+
+        return client.createApiTask(Types.InboxItem, ub, "/_users/inbox/unread");
     }
 }
