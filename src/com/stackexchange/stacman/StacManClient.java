@@ -18,6 +18,7 @@ import java.util.zip.GZIPInputStream;
 public final class StacManClient {
     public final AccessTokenMethods accessTokens = new AccessTokenMethods(this);
     public final ApplicationMethods applications = new ApplicationMethods(this);
+    public final BadgeMethods badges = new BadgeMethods(this);
     public final AnswerMethods answers = new AnswerMethods(this);
     public final QuestionMethods questions = new QuestionMethods(this);
     public final UserMethods users = new UserMethods(this);
@@ -182,6 +183,19 @@ public final class StacManClient {
             if(minname != null) throw new IllegalArgumentException("minname must be null when sort is "+sort);
             if(maxname != null) throw new IllegalArgumentException("maxname must be null when sort is "+sort);
         }
+    }
+
+    static <TSort extends ISortType> void validateSortMinMax(
+            TSort sort,
+            BadgeRank minrank,
+            BadgeRank maxrank,
+            String minname,
+            String maxname,
+            BadgeType mintype,
+            BadgeType maxtype
+    )
+    {
+        validateSortMinMax(sort, minrank, maxrank, minname, maxname, mintype, maxtype, null, null);
     }
 
     static <TSort extends ISortType> void validateSortMinMax(
