@@ -1210,6 +1210,70 @@ public final class UserMethods {
         return client.createApiTask(Types.UserTimeline, ub, "/_users/timeline");
     }
 
+    public Future<StacManResponse<TopTag>> getTopAnswerTags(String site, int id, String filter, Integer page, Integer pagesize)
+    {
+        client.validateString(site, "site");
+        client.validatePaging(page, pagesize);
+
+        ApiUrlBuilder ub = new ApiUrlBuilder(String.format("/users/%1$d/top-answer-tags", id), false);
+
+        ub.addParameter("site", site);
+        ub.addParameter("filter", filter);
+        ub.addParameter("page", page);
+        ub.addParameter("pagesize", pagesize);
+
+        return client.createApiTask(Types.TopTag, ub, "/_users/top-answer-tags");
+    }
+
+    public Future<StacManResponse<TopTag>> getMyTopAnswerTags(String site, String access_token, String filter, Integer page, Integer pagesize)
+    {
+        client.validateString(site, "site");
+        client.validateString(access_token, "access_token");
+        client.validatePaging(page, pagesize);
+
+        ApiUrlBuilder ub = new ApiUrlBuilder("/me/top-answer-tags", true);
+
+        ub.addParameter("site", site);
+        ub.addParameter("access_token", access_token);
+        ub.addParameter("filter", filter);
+        ub.addParameter("page", page);
+        ub.addParameter("pagesize", pagesize);
+
+        return client.createApiTask(Types.TopTag, ub, "/_users/top-answer-tags");
+    }
+
+    public Future<StacManResponse<TopTag>> getTopQuestionTags(String site, int id, String filter, Integer page, Integer pagesize)
+    {
+        client.validateString(site, "site");
+        client.validatePaging(page, pagesize);
+
+        ApiUrlBuilder ub = new ApiUrlBuilder(String.format("/users/%1$d/top-question-tags", id), false);
+
+        ub.addParameter("site", site);
+        ub.addParameter("filter", filter);
+        ub.addParameter("page", page);
+        ub.addParameter("pagesize", pagesize);
+
+        return client.createApiTask(Types.TopTag, ub, "/_users/top-question-tags");
+    }
+
+    public Future<StacManResponse<TopTag>> getMyTopQuestionTags(String site, String access_token, String filter, Integer page, Integer pagesize)
+    {
+        client.validateString(site, "site");
+        client.validateString(access_token, "access_token");
+        client.validatePaging(page, pagesize);
+
+        ApiUrlBuilder ub = new ApiUrlBuilder("/me/top-question-tags", true);
+
+        ub.addParameter("site", site);
+        ub.addParameter("access_token", access_token);
+        ub.addParameter("filter", filter);
+        ub.addParameter("page", page);
+        ub.addParameter("pagesize", pagesize);
+
+        return client.createApiTask(Types.TopTag, ub, "/_users/top-question-tags");
+    }
+
     public Future<StacManResponse<InboxItem>> getInbox(String site, String access_token, int id, String filter, Integer page, Integer pagesize) {
         client.validateString(site, "site");
         client.validateString(access_token, "access_token");
