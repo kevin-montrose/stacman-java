@@ -1,5 +1,4 @@
 package com.stackexchange.stacman;
-import sun.reflect.generics.tree.TypeSignature;
 
 import java.util.Date;
 import java.util.concurrent.Future;
