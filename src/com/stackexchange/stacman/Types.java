@@ -21,4 +21,5 @@ final class Types {
     public static final Type NetworkUser =  new TypeToken<Wrapper<NetworkUser>>() {}.getType();
     public static final Type QuestionTimeline =  new TypeToken<Wrapper<QuestionTimeline>>() {}.getType();
     public static final Type Error =  new TypeToken<Wrapper<Error>>() {}.getType();
+    public static final Type Event =  new TypeToken<Wrapper<Event>>() {}.getType();
 }
