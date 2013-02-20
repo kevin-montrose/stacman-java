@@ -1033,6 +1033,70 @@ public final class UserMethods {
         return client.createApiTask(Types.Tag, ub, "/_users/tags");
     }
 
+    public Future<StacManResponse<Answer>> getTopAnswers(String site, int id, String[] tags, String filter, Integer page, Integer pagesize, Date fromdate, Date todate, AnswerSort sort, Date mindate, Date maxdate, Integer min, Integer max, Order order) {
+        return getTopAnswers(site, id, StacManClient.toIter(tags), filter, page, pagesize, fromdate, todate, sort, mindate, maxdate, min, max, order);
+    }
+
+    public Future<StacManResponse<Answer>> getTopAnswers(String site, int id, Iterable<String> tags, String filter, Integer page, Integer pagesize, Date fromdate, Date todate, AnswerSort sort, Date mindate, Date maxdate, Integer min, Integer max, Order order)
+    {
+        if(sort == null){
+            sort = AnswerSort.Default;
+        }
+
+        client.validateString(site, "site");
+        client.validateEnumerable(tags, "tags");
+        client.validatePaging(page, pagesize);
+        client.validateSortMinMax(sort, mindate, maxdate, min, max);
+
+        ApiUrlBuilder ub = new ApiUrlBuilder(String.format("/users/%1$d/tags/%2$S/top-answers", id, StacManClient.join(";", tags)), false);
+
+        ub.addParameter("site", site);
+        ub.addParameter("filter", filter);
+        ub.addParameter("page", page);
+        ub.addParameter("pagesize", pagesize);
+        ub.addParameter("fromdate", fromdate);
+        ub.addParameter("todate", todate);
+        ub.addParameter("sort", sort);
+        ub.addParameter("min", mindate);
+        ub.addParameter("max", maxdate);
+        ub.addParameter("min", min);
+        ub.addParameter("max", max);
+        ub.addParameter("order", order);
+
+        return client.createApiTask(Types.Answer, ub, "/_users/tags/{tags}/top-answers");
+    }
+
+    public Future<StacManResponse<Answer>> getMyTopAnswers(String site, String access_token, Iterable<String> tags, String filter, Integer page, Integer pagesize, Date fromdate, Date todate, AnswerSort sort, Date mindate, Date maxdate, Integer min, Integer max, Order order)
+    {
+        if(sort == null){
+            sort = AnswerSort.Default;
+        }
+
+        client.validateString(site, "site");
+        client.validateString(access_token, "access_token");
+        client.validateEnumerable(tags, "tags");
+        client.validatePaging(page, pagesize);
+        client.validateSortMinMax(sort, mindate, maxdate, min, max);
+
+        ApiUrlBuilder ub = new ApiUrlBuilder(String.format("/me/tags/%1$S/top-answers", StacManClient.join(";", tags)), true);
+
+        ub.addParameter("site", site);
+        ub.addParameter("access_token", access_token);
+        ub.addParameter("filter", filter);
+        ub.addParameter("page", page);
+        ub.addParameter("pagesize", pagesize);
+        ub.addParameter("fromdate", fromdate);
+        ub.addParameter("todate", todate);
+        ub.addParameter("sort", sort);
+        ub.addParameter("min", mindate);
+        ub.addParameter("max", maxdate);
+        ub.addParameter("min", min);
+        ub.addParameter("max", max);
+        ub.addParameter("order", order);
+
+        return client.createApiTask(Types.Answer, ub, "/_users/tags/{tags}/top-answers");
+    }
+
     public Future<StacManResponse<InboxItem>> getInbox(String site, String access_token, int id, String filter, Integer page, Integer pagesize) {
         client.validateString(site, "site");
         client.validateString(access_token, "access_token");
