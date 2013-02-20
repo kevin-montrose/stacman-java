@@ -26,4 +26,5 @@ final class Types {
     public static final Type Info =  new TypeToken<Wrapper<Info>>() {}.getType();
     public static final Type Post =  new TypeToken<Wrapper<Post>>() {}.getType();
     public static final Type Revision =  new TypeToken<Wrapper<Revision>>() {}.getType();
+    public static final Type Site =  new TypeToken<Wrapper<Site>>() {}.getType();
 }
