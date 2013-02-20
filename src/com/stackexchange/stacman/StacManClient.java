@@ -191,6 +191,17 @@ public final class StacManClient {
             BadgeRank minrank,
             BadgeRank maxrank,
             String minname,
+            String maxname
+    )
+    {
+        validateSortMinMax(sort, minrank, maxrank, minname, maxname, null, null, null, null);
+    }
+
+    static <TSort extends ISortType> void validateSortMinMax(
+            TSort sort,
+            BadgeRank minrank,
+            BadgeRank maxrank,
+            String minname,
             String maxname,
             BadgeType mintype,
             BadgeType maxtype
