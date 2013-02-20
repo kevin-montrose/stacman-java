@@ -29,6 +29,7 @@ public final class StacManClient {
     public final PostMethods posts = new PostMethods(this);
     public final PrivilegeMethods privileges = new PrivilegeMethods(this);
     public final QuestionMethods questions = new QuestionMethods(this);
+    public final RevisionMethods revisions = new RevisionMethods(this);
     public final UserMethods users = new UserMethods(this);
 
     private String key;
