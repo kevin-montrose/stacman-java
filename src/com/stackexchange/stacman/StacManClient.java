@@ -110,6 +110,8 @@ public final class StacManClient {
                         {
                             Wrapper<T> wrapper =  parseApiResponse(sb.toString(), typeFinal);
 
+                            setBackoffs(wrapper, backoffKeyFinal);
+
                             return new StacManResponse<T>(wrapper, null);
                         }catch(Exception e){
                             return new StacManResponse<T>(null, e);
@@ -122,6 +124,18 @@ public final class StacManClient {
 
     private int requestsOverLast5Secs = 0;
     private Date last5SecondsStarted = new Date();
+    private HashMap<String, Date> backoffUntil = new HashMap<String, Date>();
+
+    private <T> void setBackoffs(Wrapper<T> resp, String backoffKey){
+        if(resp.getBackoff() != null && resp.getBackoff() > 0) {
+            Date now = new Date();
+            long until = now.getTime() + 1000 * resp.getBackoff();
+
+            synchronized (backoffUntil) {
+                backoffUntil.put(backoffKey, new Date(until));
+            }
+        }
+    }
 
     private synchronized long ShouldWait(String backoffKey){
         Date now = new Date();
@@ -135,6 +149,16 @@ public final class StacManClient {
 
         if(requestsOverLast5Secs >= 30){
             return Math.max(30000 - elapsed, 1);
+        }
+
+        synchronized (backoffUntil){
+            if(backoffUntil.containsKey(backoffKey)){
+                Date until = backoffUntil.get(backoffKey);
+
+                if(until.after(now)){
+                    return until.getTime() - now.getTime();
+                }
+            }
         }
 
         requestsOverLast5Secs++;
