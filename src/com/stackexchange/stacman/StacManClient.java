@@ -128,6 +128,15 @@ public final class StacManClient {
     static <TSort extends ISortType> void validateSortMinMax(
             TSort sort,
             Date mindate,
+            Date maxdate
+    )
+    {
+        validateSortMinMax(sort, null, null, mindate, maxdate, null, null);
+    }
+
+    static <TSort extends ISortType> void validateSortMinMax(
+            TSort sort,
+            Date mindate,
             Date maxdate,
             Integer min,
             Integer max

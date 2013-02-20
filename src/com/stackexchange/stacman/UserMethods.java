@@ -907,6 +907,65 @@ public final class UserMethods {
         return client.createApiTask(Types.Reputation, ub, "/_users/reputation");
     }
 
+    public Future<StacManResponse<SuggestedEdit>> getSuggestedEdits(String site, Integer[] ids, String filter, Integer page, Integer pagesize, Date fromdate, Date todate, SuggestedEditSort sort, Date mindate, Date maxdate, Order order) {
+        return getSuggestedEdits(site, StacManClient.toIter(ids), filter, page, pagesize, fromdate, todate, sort, mindate, maxdate, order);
+    }
+
+    public Future<StacManResponse<SuggestedEdit>> getSuggestedEdits(String site, Iterable<Integer> ids, String filter, Integer page, Integer pagesize, Date fromdate, Date todate, SuggestedEditSort sort, Date mindate, Date maxdate, Order order)
+    {
+        if(sort == null){
+            sort = SuggestedEditSort.Default;
+        }
+
+        client.validateString(site, "site");
+        client.validateEnumerable(ids, "ids");
+        client.validatePaging(page, pagesize);
+        client.validateSortMinMax(sort, mindate, maxdate);
+
+        ApiUrlBuilder ub = new ApiUrlBuilder(String.format("/users/%1$S/suggested-edits", StacManClient.join(";", ids)), false);
+
+        ub.addParameter("site", site);
+        ub.addParameter("filter", filter);
+        ub.addParameter("page", page);
+        ub.addParameter("pagesize", pagesize);
+        ub.addParameter("fromdate", fromdate);
+        ub.addParameter("todate", todate);
+        ub.addParameter("sort", sort);
+        ub.addParameter("min", mindate);
+        ub.addParameter("max", maxdate);
+        ub.addParameter("order", order);
+
+        return client.createApiTask(Types.SuggestedEdit, ub, "/_users/suggested-edits");
+    }
+
+    public Future<StacManResponse<SuggestedEdit>> getMySuggestedEdits(String site, String access_token, String filter, Integer page, Integer pagesize, Date fromdate, Date todate, SuggestedEditSort sort, Date mindate, Date maxdate, Order order)
+    {
+        if(sort == null){
+            sort = SuggestedEditSort.Default;
+        }
+
+        client.validateString(site, "site");
+        client.validateString(access_token, "access_token");
+        client.validatePaging(page, pagesize);
+        client.validateSortMinMax(sort, mindate, maxdate);
+
+        ApiUrlBuilder ub = new ApiUrlBuilder("/me/suggested-edits", true);
+
+        ub.addParameter("site", site);
+        ub.addParameter("access_token", access_token);
+        ub.addParameter("filter", filter);
+        ub.addParameter("page", page);
+        ub.addParameter("pagesize", pagesize);
+        ub.addParameter("fromdate", fromdate);
+        ub.addParameter("todate", todate);
+        ub.addParameter("sort", sort);
+        ub.addParameter("min", mindate);
+        ub.addParameter("max", maxdate);
+        ub.addParameter("order", order);
+
+        return client.createApiTask(Types.SuggestedEdit, ub, "/_users/suggested-edits");
+    }
+
     public Future<StacManResponse<InboxItem>> getInbox(String site, String access_token, int id, String filter, Integer page, Integer pagesize) {
         client.validateString(site, "site");
         client.validateString(access_token, "access_token");
