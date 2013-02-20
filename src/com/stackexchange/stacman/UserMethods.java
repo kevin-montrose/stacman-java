@@ -1274,6 +1274,66 @@ public final class UserMethods {
         return client.createApiTask(Types.TopTag, ub, "/_users/top-question-tags");
     }
 
+    public Future<StacManResponse<User>> getModerators(String site, String filter, Integer page, Integer pagesize, Date fromdate, Date todate, UserSort sort, Integer min, Integer max, Date mindate, Date maxdate, String minname, String maxname, Order order)
+    {
+        if(sort == null){
+            sort = UserSort.Default;
+        }
+
+        client.validateString(site, "site");
+        client.validatePaging(page, pagesize);
+        client.validateSortMinMax(sort, min, max, mindate, maxdate, minname, maxname);
+
+        ApiUrlBuilder ub = new ApiUrlBuilder("/users/moderators", false);
+
+        ub.addParameter("site", site);
+        ub.addParameter("filter", filter);
+        ub.addParameter("page", page);
+        ub.addParameter("pagesize", pagesize);
+        ub.addParameter("fromdate", fromdate);
+        ub.addParameter("todate", todate);
+        ub.addParameter("sort", sort);
+        ub.addParameter("min", min);
+        ub.addParameter("max", max);
+        ub.addParameter("min", mindate);
+        ub.addParameter("max", maxdate);
+        ub.addParameter("min", minname);
+        ub.addParameter("max", maxname);
+        ub.addParameter("order", order);
+
+        return client.createApiTask(Types.User, ub, "/users/moderators");
+    }
+
+    public Future<StacManResponse<User>> getElectedModerators(String site, String filter, Integer page, Integer pagesize, Date fromdate, Date todate, UserSort sort, Integer min, Integer max, Date mindate, Date maxdate, String minname, String maxname, Order order)
+    {
+        if(sort == null){
+            sort = UserSort.Default;
+        }
+
+        client.validateString(site, "site");
+        client.validatePaging(page, pagesize);
+        client.validateSortMinMax(sort, min, max, mindate, maxdate, minname, maxname);
+
+        ApiUrlBuilder ub = new ApiUrlBuilder("/users/moderators/elected", false);
+
+        ub.addParameter("site", site);
+        ub.addParameter("filter", filter);
+        ub.addParameter("page", page);
+        ub.addParameter("pagesize", pagesize);
+        ub.addParameter("fromdate", fromdate);
+        ub.addParameter("todate", todate);
+        ub.addParameter("sort", sort);
+        ub.addParameter("min", min);
+        ub.addParameter("max", max);
+        ub.addParameter("min", mindate);
+        ub.addParameter("max", maxdate);
+        ub.addParameter("min", minname);
+        ub.addParameter("max", maxname);
+        ub.addParameter("order", order);
+
+        return client.createApiTask(Types.User, ub, "/users/moderators/elected");
+    }
+
     public Future<StacManResponse<InboxItem>> getInbox(String site, String access_token, int id, String filter, Integer page, Integer pagesize) {
         client.validateString(site, "site");
         client.validateString(access_token, "access_token");
