@@ -33,6 +33,7 @@ public final class StacManClient {
     public final SearchMethods search = new SearchMethods(this);
     public final SiteMethods sites = new SiteMethods(this);
     public final SuggestedEditMethods suggestedEdits = new SuggestedEditMethods(this);
+    public final TagMethods tags = new TagMethods(this);
     public final UserMethods users = new UserMethods(this);
 
     private String key;

@@ -27,4 +27,7 @@ final class Types {
     public static final Type Post =  new TypeToken<Wrapper<Post>>() {}.getType();
     public static final Type Revision =  new TypeToken<Wrapper<Revision>>() {}.getType();
     public static final Type Site =  new TypeToken<Wrapper<Site>>() {}.getType();
+    public static final Type TagSynonym =  new TypeToken<Wrapper<TagSynonym>>() {}.getType();
+    public static final Type TagScore =  new TypeToken<Wrapper<TagScore>>() {}.getType();
+    public static final Type TagWiki =  new TypeToken<Wrapper<TagWiki>>() {}.getType();
 }
