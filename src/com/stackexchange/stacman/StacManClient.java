@@ -10,6 +10,7 @@ import java.net.URLConnection;
 import java.util.*;
 import java.util.concurrent.*;
 
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.zip.GZIPInputStream;
 
 /**
@@ -65,11 +66,22 @@ public final class StacManClient {
 
         final String urlFinal = ub.toString();
         final Type typeFinal = type;
+        final String backoffKeyFinal = backoffKey;
 
         Callable<StacManResponse<T>> background =
                 new Callable<StacManResponse<T>>() {
                     @Override
                     public StacManResponse<T> call() throws Exception {
+
+                        long shouldWaitFor;
+                        do{
+                            shouldWaitFor = ShouldWait(backoffKeyFinal);
+
+                            if(shouldWaitFor > 0) {
+                                Thread.sleep(shouldWaitFor);
+                            }
+                        }while(shouldWaitFor != -1);
+
                         URL fetchFrom = new URL(urlFinal);
 
                         URLConnection con = fetchFrom.openConnection();
@@ -106,6 +118,27 @@ public final class StacManClient {
                 };
 
         return executor.submit(background);
+    }
+
+    private int requestsOverLast5Secs = 0;
+    private Date last5SecondsStarted = new Date();
+
+    private synchronized long ShouldWait(String backoffKey){
+        Date now = new Date();
+
+        long elapsed = now.getTime() - last5SecondsStarted.getTime();
+
+        if(elapsed > 30000){
+            requestsOverLast5Secs = 0;
+            last5SecondsStarted = now;
+        }
+
+        if(requestsOverLast5Secs >= 30){
+            return Math.max(30000 - elapsed, 1);
+        }
+
+        requestsOverLast5Secs++;
+        return -1;
     }
 
     private <T> Wrapper<T> parseApiResponse(String json, Type type) {
