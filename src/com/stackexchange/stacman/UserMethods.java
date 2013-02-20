@@ -1408,4 +1408,37 @@ public final class UserMethods {
 
         return client.createApiTask(Types.InboxItem, ub, "/_users/inbox/unread");
     }
+
+    public Future<StacManResponse<NetworkUser>> getAssociated(Integer[] ids, String filter, Integer page, Integer pagesize) {
+        return getAssociated(StacManClient.toIter(ids), filter, page, pagesize);
+    }
+
+    public Future<StacManResponse<NetworkUser>> getAssociated(Iterable<Integer> ids, String filter, Integer page, Integer pagesize)
+    {
+        client.validateEnumerable(ids, "ids");
+        client.validatePaging(page, pagesize);
+
+        ApiUrlBuilder ub = new ApiUrlBuilder(String.format("/users/%1$S/associated", StacManClient.join(";", ids)), false);
+
+        ub.addParameter("filter", filter);
+        ub.addParameter("page", page);
+        ub.addParameter("pagesize", pagesize);
+
+        return client.createApiTask(Types.NetworkUser, ub, "/_users/associated");
+    }
+
+    public Future<StacManResponse<NetworkUser>> getMyAssociated(String access_token, String filter, Integer page, Integer pagesize)
+    {
+        client.validateString(access_token, "access_token");
+        client.validatePaging(page, pagesize);
+
+        ApiUrlBuilder ub = new ApiUrlBuilder("/me/associated", true);
+
+        ub.addParameter("access_token", access_token);
+        ub.addParameter("filter", filter);
+        ub.addParameter("page", page);
+        ub.addParameter("pagesize", pagesize);
+
+        return client.createApiTask(Types.NetworkUser, ub, "/_users/associated");
+    }
 }

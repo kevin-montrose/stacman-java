@@ -18,4 +18,5 @@ final class Types {
     public static final Type Tag =  new TypeToken<Wrapper<Tag>>() {}.getType();
     public static final Type UserTimeline =  new TypeToken<Wrapper<UserTimeline>>() {}.getType();
     public static final Type TopTag =  new TypeToken<Wrapper<TopTag>>() {}.getType();
+    public static final Type NetworkUser =  new TypeToken<Wrapper<NetworkUser>>() {}.getType();
 }
