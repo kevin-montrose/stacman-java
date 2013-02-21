@@ -4,7 +4,7 @@ import java.util.Date;
 
 public final class SuggestedEdit {
     private Long approval_date;
-    public Date getApprovalDate() { return approval_date != null ? new Date(approval_date) : null; }
+    public Date getApprovalDate() { return approval_date != null ? new Date(approval_date* 1000) : null; }
 
     private String body;
     public String getBody() { return body; }
@@ -13,7 +13,7 @@ public final class SuggestedEdit {
     public String getComment() { return comment; }
 
     private long creation_date;
-    public Date getCreationDate() { return new Date(creation_date); }
+    public Date getCreationDate() { return new Date(creation_date* 1000); }
 
     private int post_id;
     public int getPostId() { return post_id; }
@@ -25,7 +25,7 @@ public final class SuggestedEdit {
     public ShallowUser getProposingUser() { return proposing_user; }
 
     private Long rejection_date;
-    public Date getRejectionDate() { return rejection_date != null ? new Date(rejection_date): null;}
+    public Date getRejectionDate() { return rejection_date != null ? new Date(rejection_date* 1000): null;}
 
     private int suggested_edit_id;
     public int getSuggestedEditId() { return suggested_edit_id; }

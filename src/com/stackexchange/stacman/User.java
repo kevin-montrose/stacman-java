@@ -26,7 +26,7 @@ public final class User {
     public BadgeCount getBadgeCounts(){ return badge_counts; }
 
     private long creation_date;
-    public Date getCreationDate() { return new Date(creation_date); }
+    public Date getCreationDate() { return new Date(creation_date* 1000); }
 
     private String display_name;
     public String getDisplayName() { return display_name; }
@@ -38,10 +38,10 @@ public final class User {
     public boolean getIsEmployee() { return is_employee; }
 
     private long last_access_date;
-    public Date getLastAccessDate() { return new Date(last_access_date); }
+    public Date getLastAccessDate() { return new Date(last_access_date* 1000); }
 
     private long last_modified_date;
-    public Date getLastModifiedDate(){ return new Date(last_modified_date); }
+    public Date getLastModifiedDate(){ return new Date(last_modified_date* 1000); }
 
     private String link;
     public String getLink(){ return link; }
@@ -68,7 +68,7 @@ public final class User {
     public int getReputationChangeYear() { return reputation_change_year; }
 
     private long timed_penalty_date;
-    public Date getTimedPenaltyDate() { return new Date(timed_penalty_date); }
+    public Date getTimedPenaltyDate() { return new Date(timed_penalty_date* 1000); }
 
     private int up_vote_count;
     public int getUpVoteCount() { return up_vote_count; }

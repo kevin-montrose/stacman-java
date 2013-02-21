@@ -13,10 +13,10 @@ public final class NetworkUser {
     public BadgeCount getBadgeCounts() { return badge_counts; }
 
     private long creation_date;
-    public Date getCreationDate(){ return new Date(creation_date); }
+    public Date getCreationDate(){ return new Date(creation_date* 1000); }
 
     private long last_access_date;
-    public Date getLastAccessDate(){ return new Date(last_access_date); }
+    public Date getLastAccessDate(){ return new Date(last_access_date* 1000); }
 
     private int question_count;
     public int getQuestionCount(){ return question_count; }

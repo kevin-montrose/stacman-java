@@ -17,7 +17,7 @@ public final class InboxItem {
     public Integer getCommentId() { return comment_id; }
 
     private long creation_date;
-    public Date getCreationDate() { return new Date(creation_date); }
+    public Date getCreationDate() { return new Date(creation_date* 1000); }
 
     private boolean is_unread;
     public boolean  getIsUnread() { return is_unread; }

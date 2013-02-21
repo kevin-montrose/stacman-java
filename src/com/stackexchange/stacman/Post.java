@@ -10,16 +10,16 @@ public final class Post {
     public Comment[] getComments(){return comments; }
 
     private long creation_date;
-    public Date getCreationDate(){return new Date(creation_date); }
+    public Date getCreationDate(){return new Date(creation_date* 1000); }
 
     private int down_vote_count;
     public int getDownVoteCount(){return down_vote_count; }
 
     private long last_activity_date;
-    public Date getLastActivityDate(){return new Date(last_activity_date);}
+    public Date getLastActivityDate(){return new Date(last_activity_date* 1000);}
 
     private Long last_edit_date;
-    public Date getLastEditDate(){return last_edit_date != null ? new Date(last_edit_date) : null;}
+    public Date getLastEditDate(){return last_edit_date != null ? new Date(last_edit_date* 1000) : null;}
 
     private ShallowUser owner;
     public ShallowUser getOwner(){return owner;}

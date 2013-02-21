@@ -16,7 +16,7 @@ public final class Tag {
     public boolean getIsRequired() { return is_required; }
 
     private Long last_activity_date;
-    public Date getLastActivityDate() { return last_activity_date != null ? new Date(last_activity_date) : null; }
+    public Date getLastActivityDate() { return last_activity_date != null ? new Date(last_activity_date* 1000) : null; }
 
     private String name;
     public String getName() { return name; }

@@ -10,7 +10,7 @@ public final class UserTimeline {
     public Integer getCommentId() { return comment_id; }
 
     private long creation_date;
-    public Date getCreationDate() { return new Date(creation_date); }
+    public Date getCreationDate() { return new Date(creation_date* 1000); }
 
     private String detail;
     public String getDetail() { return detail; }

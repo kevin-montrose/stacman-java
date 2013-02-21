@@ -17,7 +17,7 @@ public final class Site {
     public String getAudience(){ return audience; }
 
     private Long closed_beta_date;
-    public Date getClosedBetaDate(){ return closed_beta_date != null ? new Date(closed_beta_date) : null; }
+    public Date getClosedBetaDate(){ return closed_beta_date != null ? new Date(closed_beta_date* 1000) : null; }
 
     private String favicon_url;
     public String getFaviconUrl() { return favicon_url; }
@@ -26,7 +26,7 @@ public final class Site {
     public String getIconUrl() { return icon_url; }
 
     private Long launch_date;
-    public Date getLaunchDate() { return launch_date != null ? new Date(launch_date) : null; }
+    public Date getLaunchDate() { return launch_date != null ? new Date(launch_date* 1000) : null; }
 
     private String logo_url;
     public String getLogoUrl() { return logo_url; }
@@ -38,7 +38,7 @@ public final class Site {
     public String getName(){ return name; }
 
     private Long open_beta_date;
-    public Date getOpenBetaDate() { return open_beta_date != null ? new Date(open_beta_date) : null; }
+    public Date getOpenBetaDate() { return open_beta_date != null ? new Date(open_beta_date* 1000) : null; }
 
     private RelatedSite[] related_site;
     public RelatedSite[] getRelatedSite() { return related_site; }

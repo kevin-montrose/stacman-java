@@ -8,7 +8,7 @@ public final class QuestionTimeline {
     public Integer getCommentId() { return comment_id;}
 
     private long creation_date;
-    public Date getCreationDate() { return new Date(creation_date); }
+    public Date getCreationDate() { return new Date(creation_date* 1000); }
 
     private Integer down_vote_count;
     public Integer getDownVoteCount() { return down_vote_count; }

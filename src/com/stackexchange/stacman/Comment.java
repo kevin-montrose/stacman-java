@@ -14,7 +14,7 @@ public final class Comment {
     public int getCommentId() { return comment_id; }
 
     private long creation_date;
-    public Date getCreationDate() { return new Date(creation_date); }
+    public Date getCreationDate() { return new Date(creation_date* 1000); }
 
     private boolean edited;
     public boolean getEdited() { return edited; }

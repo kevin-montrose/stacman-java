@@ -10,7 +10,7 @@ import java.util.Date;
  */
 public final class MigrationInfo {
     private long on_date;
-    public Date getOnDate() { return new Date(on_date); }
+    public Date getOnDate() { return new Date(on_date* 1000); }
 
     private Site other_site;
     public Site getOtherSite() { return other_site; }

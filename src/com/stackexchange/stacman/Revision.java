@@ -11,7 +11,7 @@ public final class Revision {
     public String getComment(){return comment;}
 
     private long creation_date;
-    public Date getCreationDate(){return new Date(creation_date);}
+    public Date getCreationDate(){return new Date(creation_date* 1000);}
 
     private boolean is_rollback;
     public boolean getIsRollback() {return is_rollback; }

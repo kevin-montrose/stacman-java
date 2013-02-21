@@ -11,7 +11,7 @@ public final class Reputation {
     public String getLink(){return link;}
 
     private long on_date;
-    public Date getOnDate() { return new Date(on_date); }
+    public Date getOnDate() { return new Date(on_date* 1000); }
 
     private int post_id;
     public int getPostId() { return post_id; }

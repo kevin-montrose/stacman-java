@@ -4,7 +4,7 @@ import java.util.Date;
 
 public final class Event {
     private long creation_date;
-    public Date getCreationDate() { return new Date(creation_date); }
+    public Date getCreationDate() { return new Date(creation_date* 1000); }
 
     private int event_id;
     public int getEventId() { return event_id; }
