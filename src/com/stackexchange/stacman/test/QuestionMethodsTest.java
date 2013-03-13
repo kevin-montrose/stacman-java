@@ -19,9 +19,9 @@ public class QuestionMethodsTest {
         if(!questions.getSuccess()) throw new Exception();
         if(questions.getData() == null) throw new Exception();
         if(questions.getData().getItems() == null) throw new Exception();
-        if(questions.getData().getItems().length == 0) throw new Exception();
+        if(questions.getData().getItems().size() == 0) throw new Exception();
 
-        Question topQ = questions.getData().getItems()[0];
+        Question topQ = questions.getData().getItems().toArray(new Question[0])[0];
 
         if(topQ.getTitle() == null) throw new Exception();
     }

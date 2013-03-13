@@ -23,9 +23,9 @@ public class UserMethodsTest {
         if(!users.getSuccess()) throw new Exception();
         if(users.getData() == null) throw new Exception();
         if(users.getData().getItems() == null) throw new Exception();
-        if(users.getData().getItems().length == 0) throw new Exception();
+        if(users.getData().getItems().size() == 0) throw new Exception();
 
-        User jon = users.getData().getItems()[0];
+        User jon = users.getData().getItems().toArray(new User[0])[0];
 
         if(!jon.getDisplayName().equals("Jon Skeet")) throw new Exception();
         if(jon.getUserType() != UserType.Registered) throw new Exception();
@@ -41,9 +41,9 @@ public class UserMethodsTest {
         if(!badges.getSuccess()) throw new Exception();
         if(badges.getData() == null) throw new Exception();
         if(badges.getData().getItems() == null) throw new Exception();
-        if(badges.getData().getItems().length == 0) throw new Exception();
+        if(badges.getData().getItems().size() == 0) throw new Exception();
 
-        Badge jon = badges.getData().getItems()[0];
+        Badge jon = badges.getData().getItems().toArray(new Badge[0])[0];
 
         if(jon.getName() == null) throw new Exception();
     }
