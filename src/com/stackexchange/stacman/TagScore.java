@@ -1,6 +1,8 @@
 package com.stackexchange.stacman;
 
-public final class TagScore {
+import java.io.Serializable;
+
+public final class TagScore implements Serializable {
     private int post_count;
     public int getPostCount(){return post_count;}
 

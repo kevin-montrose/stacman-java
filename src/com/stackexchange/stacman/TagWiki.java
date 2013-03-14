@@ -1,8 +1,9 @@
 package com.stackexchange.stacman;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public final class TagWiki {
+public final class TagWiki implements Serializable {
     private String body;
     public String getBody(){return body;}
 

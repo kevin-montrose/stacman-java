@@ -1,8 +1,9 @@
 package com.stackexchange.stacman;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public final class Post {
+public final class Post implements Serializable {
     private String body;
     public String getBody() { return body; }
 

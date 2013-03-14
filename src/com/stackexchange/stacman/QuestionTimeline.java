@@ -1,9 +1,10 @@
 package com.stackexchange.stacman;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
-public final class QuestionTimeline {
+public final class QuestionTimeline implements Serializable {
     private Integer comment_id;
     public Integer getCommentId() { return comment_id;}
 

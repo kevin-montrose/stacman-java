@@ -1,12 +1,13 @@
 package com.stackexchange.stacman;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * StacMan InboxItem, corresponding to Stack Exchange API v2's inbox_item type
  * http://api.stackexchange.com/docs/types/inbox-item
  */
-public final class InboxItem {
+public final class InboxItem implements Serializable {
     private Integer answer_id;
     public Integer getAnswerId() { return answer_id; }
 

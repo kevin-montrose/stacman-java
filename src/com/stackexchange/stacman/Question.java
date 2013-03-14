@@ -1,12 +1,13 @@
 package com.stackexchange.stacman;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * StacMan Question, corresponding to Stack Exchange API v2's question type
  * http://api.stackexchange.com/docs/types/question
  */
-public final class Question {
+public final class Question implements Serializable {
     private Integer accepted_answer_id;
     public Integer getAcceptedAnswerId() { return accepted_answer_id; }
 

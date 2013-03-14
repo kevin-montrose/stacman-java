@@ -1,9 +1,10 @@
 package com.stackexchange.stacman;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
-public final class Revision {
+public final class Revision implements Serializable {
     private String body;
     public String getBody() {return body;}
 

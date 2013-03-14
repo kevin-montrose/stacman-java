@@ -1,10 +1,12 @@
 package com.stackexchange.stacman;
 
+import java.io.Serializable;
+
 /**
  * StacMan ShallowUser, corresponding to Stack Exchange API v2's shallow_user type
  * http://api.stackexchange.com/docs/types/shallow-user
  */
-public final class ShallowUser {
+public final class ShallowUser implements Serializable {
     private Integer accept_rate;
     public Integer getAcceptRate(){ return accept_rate; }
 

@@ -1,8 +1,9 @@
 package com.stackexchange.stacman;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public final class UserTimeline {
+public final class UserTimeline implements Serializable {
     private Integer badge_id;
     public Integer getBadgeId() { return badge_id; }
 

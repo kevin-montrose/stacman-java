@@ -1,12 +1,13 @@
 package com.stackexchange.stacman;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * StacMan User, corresponding to Stack Exchange API v2's user type
  * http://api.stackexchange.com/docs/types/user
  */
-public final class User {
+public final class User implements Serializable {
     private String about_me;
     public String getAboutMe(){ return about_me; }
 

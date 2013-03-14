@@ -1,12 +1,13 @@
 package com.stackexchange.stacman;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * StacMan Reputation, corresponding to Stack Exchange API v2's reputation type
  * http://api.stackexchange.com/docs/types/reputation
  */
-public final class Reputation {
+public final class Reputation implements Serializable {
     private String link;
     public String getLink(){return link;}
 

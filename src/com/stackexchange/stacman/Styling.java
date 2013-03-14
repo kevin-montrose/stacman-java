@@ -1,10 +1,12 @@
 package com.stackexchange.stacman;
 
+import java.io.Serializable;
+
 /**
  * StacMan Styling, corresponding to Stack Exchange API v2's styling type
  * http://api.stackexchange.com/docs/types/styling
  */
-public final class Styling {
+public final class Styling implements Serializable {
     private String link_color;
     public String getLinkColor() { return link_color; }
 

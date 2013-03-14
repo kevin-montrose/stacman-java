@@ -1,6 +1,8 @@
 package com.stackexchange.stacman;
 
-public final class Filter {
+import java.io.Serializable;
+
+public final class Filter implements Serializable {
     private String filter;
     public String getFilterName() { return filter; }
 

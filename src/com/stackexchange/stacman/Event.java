@@ -1,8 +1,9 @@
 package com.stackexchange.stacman;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public final class Event {
+public final class Event implements Serializable {
     private long creation_date;
     public Date getCreationDate() { return new Date(creation_date* 1000); }
 

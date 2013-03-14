@@ -1,12 +1,13 @@
 package com.stackexchange.stacman;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * StacMan Comment, corresponding to Stack Exchange API v2's comment type
  * http://api.stackexchange.com/docs/types/comment
  */
-public final class Comment {
+public final class Comment implements Serializable {
     private String body;
     public String getBody() { return body; }
 

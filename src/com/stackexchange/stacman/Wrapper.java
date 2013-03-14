@@ -1,5 +1,6 @@
 package com.stackexchange.stacman;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -8,7 +9,7 @@ import java.util.Collection;
  * StacMan Wrapper, corresponding to Stack Exchange API v2's common wrapper type
  * http://api.stackexchange.com/docs/wrapper
  */
-public final class Wrapper<T> {
+public final class Wrapper<T> implements Serializable {
     private Integer backoff;
     public Integer getBackoff() { return backoff; }
 

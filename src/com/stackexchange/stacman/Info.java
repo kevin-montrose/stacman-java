@@ -1,6 +1,8 @@
 package com.stackexchange.stacman;
 
-public final class Info {
+import java.io.Serializable;
+
+public final class Info implements Serializable {
     private double answers_per_minute;
     public double getAnswersPerMinute() { return answers_per_minute; }
 

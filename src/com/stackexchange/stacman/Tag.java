@@ -1,8 +1,9 @@
 package com.stackexchange.stacman;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public final class Tag {
+public final class Tag implements Serializable {
     private int count;
     public int getCount() { return count; }
 

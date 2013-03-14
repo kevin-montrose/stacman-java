@@ -1,8 +1,9 @@
 package com.stackexchange.stacman;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public final class SuggestedEdit {
+public final class SuggestedEdit implements Serializable {
     private Long approval_date;
     public Date getApprovalDate() { return approval_date != null ? new Date(approval_date* 1000) : null; }
 

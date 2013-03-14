@@ -1,8 +1,9 @@
 package com.stackexchange.stacman;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public final class NetworkUser {
+public final class NetworkUser implements Serializable {
     private int account_id;
     public int getAccountId() { return account_id; }
 

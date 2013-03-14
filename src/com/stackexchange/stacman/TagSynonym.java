@@ -1,8 +1,9 @@
 package com.stackexchange.stacman;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public final class TagSynonym {
+public final class TagSynonym implements Serializable {
     private int applied_count;
     public int getAppliedCount(){return applied_count;}
 

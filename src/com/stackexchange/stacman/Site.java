@@ -1,12 +1,13 @@
 package com.stackexchange.stacman;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * StacMan Site, corresponding to Stack Exchange API v2's site type
  * http://api.stackexchange.com/docs/types/site
  */
-public final class Site {
+public final class Site implements Serializable {
     private String[] aliases;
     public String[] getAliases(){ return aliases; }
 

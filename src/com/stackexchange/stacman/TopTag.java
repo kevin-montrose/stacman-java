@@ -1,6 +1,8 @@
 package com.stackexchange.stacman;
 
-public final class TopTag {
+import java.io.Serializable;
+
+public final class TopTag implements Serializable {
     private int answer_count;
     public int getAnswerCount() { return answer_count; }
 

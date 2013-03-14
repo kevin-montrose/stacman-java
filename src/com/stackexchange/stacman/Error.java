@@ -1,6 +1,8 @@
 package com.stackexchange.stacman;
 
-public final class Error {
+import java.io.Serializable;
+
+public final class Error implements Serializable {
     private String description;
     public String getDescription() { return description; }
 

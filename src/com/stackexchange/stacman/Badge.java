@@ -2,11 +2,13 @@ package com.stackexchange.stacman;
 
 import com.stackexchange.stacman.ShallowUser;
 
+import java.io.Serializable;
+
 /**
  * StacMan Badge, corresponding to Stack Exchange API v2's badge type
  * http://api.stackexchange.com/docs/types/badge
  */
-public final class Badge {
+public final class Badge implements Serializable {
     private int award_count;
     public int getAwardCount(){return award_count;}
 
