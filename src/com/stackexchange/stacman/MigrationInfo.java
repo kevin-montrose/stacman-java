@@ -1,7 +1,5 @@
 package com.stackexchange.stacman;
 
-import com.sun.org.apache.xalan.internal.xsltc.dom.SimpleResultTreeImpl;
-
 import java.io.Serializable;
 import java.util.Date;
 
