@@ -1,9 +1,8 @@
 package com.stackexchange.stacman;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
+import java.util.List;
 
 /**
  * StacMan Wrapper, corresponding to Stack Exchange API v2's common wrapper type
@@ -27,13 +26,13 @@ public final class Wrapper<T> implements Serializable {
 
     private T[] items;
 
-    private Collection<T> itemsCollection;
-    public Collection<T> getItems() {
-        if(itemsCollection == null && items != null){
-            itemsCollection = Arrays.asList(items);
+    private List<T> itemsList;
+    public List<T> getItems() {
+        if(itemsList == null && items != null){
+            itemsList = Arrays.asList(items);
         }
 
-        return itemsCollection;
+        return itemsList;
     }
 
     private int page;
