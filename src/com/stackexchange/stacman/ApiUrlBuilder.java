@@ -28,7 +28,7 @@ final class ApiUrlBuilder {
 
     void addParameter(String name, Date dt) {
         if(dt != null) {
-            addParameter(name, dt.getTime());
+            addParameter(name, dt.getTime() / 1000);
         }
     }
 
