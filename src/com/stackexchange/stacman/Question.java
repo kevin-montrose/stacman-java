@@ -69,7 +69,7 @@ public final class Question implements Serializable {
     public MigrationInfo getMigratedTo() { return migrated_to; }
 
     private ShallowUser owner;
-    public ShallowUser getOwner;
+    public ShallowUser getOwner() { return owner; }
 
     private Long protected_date;
     public Date getProtectedDate() { return protected_date != null ? new Date(protected_date* 1000) : null; }
