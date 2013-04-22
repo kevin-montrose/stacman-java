@@ -11,7 +11,7 @@ final class ApiUrlBuilder {
     ApiUrlBuilder(String relativeUrl, boolean useHttps) {
         baseUrl =
             String.format(
-                "%1$S://api.stackexchange.com/2.0%2$S%3$S",
+                "%1$s://api.stackexchange.com/2.0%2$s%3$s",
                     useHttps ? "https" : "http",
                     relativeUrl.startsWith("/") ? "" : "/",
                     relativeUrl
