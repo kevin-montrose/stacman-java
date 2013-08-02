@@ -41,8 +41,8 @@ public final class Site implements Serializable {
     private Long open_beta_date;
     public Date getOpenBetaDate() { return open_beta_date != null ? new Date(open_beta_date* 1000) : null; }
 
-    private RelatedSite[] related_site;
-    public RelatedSite[] getRelatedSite() { return related_site; }
+    private RelatedSite[] related_sites;
+    public RelatedSite[] getRelatedSites() { return related_sites; }
 
     private String site_state;
     public SiteState getSiteState() { return StacManClient.parseEnum(SiteState.class, site_state); }
