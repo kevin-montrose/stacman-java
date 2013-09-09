@@ -8,7 +8,7 @@ public enum ItemType {
     ChatMessage,
     NewAnswer,
     CareersMessage,
-    CareersInvitation,
+    CareersInvitations,
     MetaQuestion,
     PostNotice,
     ModeratorMessage
