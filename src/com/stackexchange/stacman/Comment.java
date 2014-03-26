@@ -37,4 +37,13 @@ public final class Comment implements Serializable {
 
     private int score;
     public int getScore() { return score; }
+
+    private String body_markdown;
+    public String getBodyMarkdown() { return body_markdown; }
+
+    private boolean upvoted;
+    public boolean getUpvoted() { return upvoted; }
+
+    private boolean can_flag;
+    public boolean getCanFlag() { return can_flag; }
 }

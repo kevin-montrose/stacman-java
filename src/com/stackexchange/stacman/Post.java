@@ -36,4 +36,10 @@ public final class Post implements Serializable {
 
     private int up_vote_count;
     public int getUpVoteCount(){return up_vote_count;}
+
+    private String title;
+    public String getTitle(){ return title; }
+
+    private String link;
+    public String getLink() { return link; }
 }

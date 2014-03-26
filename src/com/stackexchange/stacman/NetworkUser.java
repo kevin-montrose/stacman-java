@@ -4,6 +4,21 @@ import java.io.Serializable;
 import java.util.Date;
 
 public final class NetworkUser implements Serializable {
+    public NetworkUser(NetworkUser networkUser)
+    {
+        account_id = networkUser.account_id;
+        answer_count = networkUser.answer_count;
+        badge_counts = networkUser.badge_counts;
+        creation_date = networkUser.creation_date;
+        last_access_date = networkUser.last_access_date;
+        question_count = networkUser.question_count;
+        reputation = networkUser.reputation;
+        site_name = networkUser.site_name;
+        site_url = networkUser.site_url;
+        user_id = networkUser.user_id;
+        user_type = networkUser.user_type;
+    }
+
     private int account_id;
     public int getAccountId() { return account_id; }
 

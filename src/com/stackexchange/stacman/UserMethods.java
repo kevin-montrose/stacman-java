@@ -872,6 +872,75 @@ public final class UserMethods {
         return client.createApiTask(Types.Question, ub, "/_users/questions/unanswered");
     }
 
+    public Future<StacManResponse<Post>> getPosts(String site, Integer[] ids, String filter, Integer page, Integer pagesize, Date fromdate, Date todate, PostSort sort, Date mindate, Date maxdate, Integer min, Integer max, Order order){
+        return getPosts(site, StacManClient.toIter(ids), filter, page, pagesize, fromdate, todate, sort, mindate, maxdate, min, max, order);
+    }
+
+    public Future<StacManResponse<Post>> getPosts(String site, Iterable<Integer> ids, String filter, Integer page, Integer pagesize, Date fromdate, Date todate, PostSort sort, Date mindate, Date maxdate, Integer min, Integer max, Order order){
+        if(sort == null){
+            sort = PostSort.Default;
+        }
+
+        client.validateString(site, "site");
+        client.validateEnumerable(ids, "ids");
+        client.validatePaging(page, pagesize);
+        client.validateSortMinMax(sort, mindate, maxdate, min, max);
+
+        ApiUrlBuilder ub =
+                new ApiUrlBuilder(
+                        String.format(
+                                "/users/%1$S/posts",
+                                StacManClient.join(";", ids)
+                        ),
+                        false
+                );
+
+        ub.addParameter("site", site);
+        ub.addParameter("filter", filter);
+        ub.addParameter("page", page);
+        ub.addParameter("pagesize", pagesize);
+        ub.addParameter("fromdate", fromdate);
+        ub.addParameter("todate", todate);
+        ub.addParameter("sort", sort);
+        ub.addParameter("min", mindate);
+        ub.addParameter("max", maxdate);
+        ub.addParameter("min", min);
+        ub.addParameter("max", max);
+        ub.addParameter("order", order);
+
+        return client.createApiTask(Types.Post, ub, "/_users/posts");
+    }
+
+    public Future<StacManResponse<Post>> getMyPosts(String site, String access_token, String filter, Integer page, Integer pagesize, Date fromdate, Date todate, PostSort sort, Date mindate, Date maxdate, Integer min, Integer max, Order order)
+    {
+        if(sort == null){
+            sort = PostSort.Default;
+        }
+
+        client.validateString(site, "site");
+        client.validateString(access_token, "access_token");
+        client.validatePaging(page, pagesize);
+        client.validateSortMinMax(sort, mindate, maxdate, min, max);
+
+        ApiUrlBuilder ub = new ApiUrlBuilder("/me/questions", true);
+
+        ub.addParameter("site", site);
+        ub.addParameter("access_token", access_token);
+        ub.addParameter("filter", filter);
+        ub.addParameter("page", page);
+        ub.addParameter("pagesize", pagesize);
+        ub.addParameter("fromdate", fromdate);
+        ub.addParameter("todate", todate);
+        ub.addParameter("sort", sort);
+        ub.addParameter("min", mindate);
+        ub.addParameter("max", maxdate);
+        ub.addParameter("min", min);
+        ub.addParameter("max", max);
+        ub.addParameter("order", order);
+
+        return client.createApiTask(Types.Question, ub, "/_users/posts");
+    }
+
     public Future<StacManResponse<Reputation>> getReputation(String site, Integer[] ids, String filter, Integer page, Integer pagesize, Date fromdate, Date todate) {
         return getReputation(site, StacManClient.toIter(ids), filter, page, pagesize, fromdate, todate);
     }
@@ -1211,6 +1280,38 @@ public final class UserMethods {
         return client.createApiTask(Types.UserTimeline, ub, "/_users/timeline");
     }
 
+    public Future<StacManResponse<TopTag>> getTopTags(String site, int id, String filter, Integer page, Integer pagesize)
+    {
+        client.validateString(site, "site");
+        client.validatePaging(page, pagesize);
+
+        ApiUrlBuilder ub = new ApiUrlBuilder(String.format("/users/%1$d/top-tags", id), false);
+
+        ub.addParameter("site", site);
+        ub.addParameter("filter", filter);
+        ub.addParameter("page", page);
+        ub.addParameter("pagesize", pagesize);
+
+        return client.createApiTask(Types.TopTag, ub, "/_users/top-tags");
+    }
+
+    public Future<StacManResponse<TopTag>> getMyTopTags(String site, String access_token, String filter, Integer page, Integer pagesize)
+    {
+        client.validateString(site, "site");
+        client.validateString(access_token, "access_token");
+        client.validatePaging(page, pagesize);
+
+        ApiUrlBuilder ub = new ApiUrlBuilder("/me/top-tags", true);
+
+        ub.addParameter("site", site);
+        ub.addParameter("access_token", access_token);
+        ub.addParameter("filter", filter);
+        ub.addParameter("page", page);
+        ub.addParameter("pagesize", pagesize);
+
+        return client.createApiTask(Types.TopTag, ub, "/_users/top-tags");
+    }
+
     public Future<StacManResponse<TopTag>> getTopAnswerTags(String site, int id, String filter, Integer page, Integer pagesize)
     {
         client.validateString(site, "site");
@@ -1408,17 +1509,18 @@ public final class UserMethods {
         return client.createApiTask(Types.InboxItem, ub, "/_users/inbox/unread");
     }
 
-    public Future<StacManResponse<NetworkUser>> getAssociated(Integer[] ids, String filter, Integer page, Integer pagesize) {
-        return getAssociated(StacManClient.toIter(ids), filter, page, pagesize);
+    public Future<StacManResponse<NetworkUser>> getAssociated(Integer[] ids, String types, String filter, Integer page, Integer pagesize) {
+        return getAssociated(StacManClient.toIter(ids), types, filter, page, pagesize);
     }
 
-    public Future<StacManResponse<NetworkUser>> getAssociated(Iterable<Integer> ids, String filter, Integer page, Integer pagesize)
+    public Future<StacManResponse<NetworkUser>> getAssociated(Iterable<Integer> ids, String types, String filter, Integer page, Integer pagesize)
     {
         client.validateEnumerable(ids, "ids");
         client.validatePaging(page, pagesize);
 
         ApiUrlBuilder ub = new ApiUrlBuilder(String.format("/users/%1$S/associated", StacManClient.join(";", ids)), false);
 
+        ub.addParameter("types", types);
         ub.addParameter("filter", filter);
         ub.addParameter("page", page);
         ub.addParameter("pagesize", pagesize);
@@ -1426,7 +1528,7 @@ public final class UserMethods {
         return client.createApiTask(Types.NetworkUser, ub, "/_users/associated");
     }
 
-    public Future<StacManResponse<NetworkUser>> getMyAssociated(String access_token, String filter, Integer page, Integer pagesize)
+    public Future<StacManResponse<NetworkUser>> getMyAssociated(String access_token, String types, String filter, Integer page, Integer pagesize)
     {
         client.validateString(access_token, "access_token");
         client.validatePaging(page, pagesize);
@@ -1434,10 +1536,34 @@ public final class UserMethods {
         ApiUrlBuilder ub = new ApiUrlBuilder("/me/associated", true);
 
         ub.addParameter("access_token", access_token);
+        ub.addParameter("types", types);
         ub.addParameter("filter", filter);
         ub.addParameter("page", page);
         ub.addParameter("pagesize", pagesize);
 
         return client.createApiTask(Types.NetworkUser, ub, "/_users/associated");
     }
+
+    public Future<StacManResponse<NetworkActivity>> getNetworkActivity(Integer[] accountIds, String typesSemicolonSeparated, String filter, Integer page, Integer pagesize, Date fromdate, Date todate) {
+        return getNetworkActivity(StacManClient.toIter(accountIds), typesSemicolonSeparated, filter, page, pagesize, fromdate, todate);
+    }
+
+    public Future<StacManResponse<NetworkActivity>> getNetworkActivity(Iterable<Integer> accountIds, String typesSemicolonSeparated, String filter, Integer page, Integer pagesize, Date fromdate, Date todate)
+    {
+
+        client.validateEnumerable(accountIds, "ids");
+        client.validatePaging(page, pagesize);
+
+        ApiUrlBuilder ub = new ApiUrlBuilder(String.format("/users/%1$S/network-activity", StacManClient.join(";", accountIds)), false);
+
+        ub.addParameter("filter", filter);
+        ub.addParameter("page", page);
+        ub.addParameter("pagesize", pagesize);
+        ub.addParameter("fromdate", fromdate);
+        ub.addParameter("todate", todate);
+        ub.addParameter("types", typesSemicolonSeparated);
+
+        return client.createApiTask(Types.NetworkActivity, ub, "/_users/network-activity");
+    }
+
 }

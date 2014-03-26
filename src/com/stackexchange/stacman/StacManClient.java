@@ -1,16 +1,16 @@
 package com.stackexchange.stacman;
 
 import com.google.gson.Gson;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+
+import java.io.*;
 import java.lang.reflect.Type;
+import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.*;
 
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.zip.GZIPInputStream;
 
 /**
@@ -51,22 +51,54 @@ public final class StacManClient {
     public boolean getRespectBackoffs() { return respectBackoffs; }
     public void setRespectBackoffs(boolean doRespectBackoffs) { respectBackoffs = doRespectBackoffs; }
 
-    private ExecutorService executor = Executors.newFixedThreadPool(30);
+    private RequestRunner mRequestRunner;
 
-    public StacManClient() { this(null); }
-    public StacManClient(String appKey) {
+    private String accessToken;
+
+    public StacManClient() { this(null, null); }
+
+    public StacManClient(String appKey, String accessToken) {
+        this(appKey, accessToken, new DefaultRequestRunner());
+    }
+
+    public StacManClient(String appKey, String accessToken, RequestRunner runner) {
         key = appKey;
         setApiTimeoutMs(5000);
         setMaxSimultaneousRequests(10);
         setRespectBackoffs(true);
+
+        this.mRequestRunner = runner;
+        this.accessToken = accessToken;
     }
 
-    <T> Future<StacManResponse<T>> createApiTask(Type type, ApiUrlBuilder ub, String backoffKey) {
+    public void setAccessToken(String token) {
+        accessToken = token;
+    }
+
+    public <T> Future<StacManResponse<T>> createApiTask(Type type, ApiUrlBuilder ub, String backoffKey) {
+        return createApiTask(type, ub, backoffKey, false);
+    }
+
+    public static interface RequestRunner {
+        abstract <T> Future<StacManResponse<T>> run(Callable<StacManResponse<T>> callable);
+    }
+
+    private static class DefaultRequestRunner implements RequestRunner {
+        private ExecutorService executor = Executors.newFixedThreadPool(30);
+        @Override
+        public <T> Future<StacManResponse<T>> run(Callable<StacManResponse<T>> callable) {
+            return executor.submit(callable);
+        }
+    }
+
+    public <T> Future<StacManResponse<T>> createApiTask(Type type, ApiUrlBuilder ub, String backoffKey, final Boolean isPost) {
         ub.addParameter("key", key);
 
-        final String urlFinal = ub.toString();
+        final String urlFinal = ub.getBaseUrlWithParameters();
         final Type typeFinal = type;
         final String backoffKeyFinal = backoffKey;
+        final String urlPostBody = ub.getParameters();
+        final String baseUrl = ub.getBaseUrl();
 
         Callable<StacManResponse<T>> background =
                 new Callable<StacManResponse<T>>() {
@@ -74,6 +106,8 @@ public final class StacManClient {
                     public StacManResponse<T> call() throws Exception {
 
                         long shouldWaitFor;
+                        InputStream in = null;
+
                         do{
                             shouldWaitFor = ShouldWait(backoffKeyFinal);
 
@@ -82,19 +116,46 @@ public final class StacManClient {
                             }
                         }while(shouldWaitFor != -1);
 
-                        URL fetchFrom = new URL(urlFinal);
+                        URL fetchFrom;
 
-                        URLConnection con = fetchFrom.openConnection();
+                        if (isPost)
+                            fetchFrom = new URL(baseUrl);
+                        else
+                            fetchFrom = new URL(urlFinal);
+
+                        HttpURLConnection con = (HttpURLConnection) fetchFrom.openConnection();
+
                         con.setRequestProperty("User-Agent", "StacMan Java");
                         con.setRequestProperty("Accept-Encoding", "gzip");
 
-                        con.connect();
+                        if (isPost)
+                        {
+                            con.setDoOutput(true);
+                            OutputStream wr = con.getOutputStream();
+                            wr.write(urlPostBody.getBytes("UTF-8"));
+                            wr.close();
+                        }
+                        int responseCode = 0;
+                        try
+                        {
+                            responseCode = con.getResponseCode();
+                        }
+                        catch (Exception exception)
+                        {
+                            // if we didn't even get a response code, this is a network error
+                            return new StacManResponse<T>(null, exception);
+                        }
 
-                        InputStream in = con.getInputStream();
+                        if (responseCode == HttpURLConnection.HTTP_OK)
+                            in = con.getInputStream();
+                        else
+                            in = con.getErrorStream();
 
-                        GZIPInputStream gzip = new GZIPInputStream(in);
+                        if ("gzip".equals(con.getContentEncoding())) {
+                            in = new GZIPInputStream(in);
+                        }
 
-                        InputStreamReader is = new InputStreamReader(gzip);
+                        InputStreamReader is = new InputStreamReader(in);
                         StringBuilder sb=new StringBuilder();
                         BufferedReader br = new BufferedReader(is);
                         String read = br.readLine();
@@ -104,7 +165,7 @@ public final class StacManClient {
                             read = br.readLine();
                         }
 
-                        gzip.close();
+                        in.close();
 
                         try
                         {
@@ -113,13 +174,13 @@ public final class StacManClient {
                             setBackoffs(wrapper, backoffKeyFinal);
 
                             return new StacManResponse<T>(wrapper, null);
-                        }catch(Exception e){
+                        } catch(Exception e){
                             return new StacManResponse<T>(null, e);
                         }
                     }
                 };
 
-        return executor.submit(background);
+        return mRequestRunner.run(background);
     }
 
     private int requestsOverLast5Secs = 0;
@@ -189,7 +250,7 @@ public final class StacManClient {
             throw new IllegalArgumentException("pagesize cannot be negative");
     }
 
-    static void validateString(String value, String paramName)
+    public static void validateString(String value, String paramName)
     {
         if (value == null)
             throw new IllegalArgumentException(paramName);
@@ -338,7 +399,7 @@ public final class StacManClient {
         return asIter;
     }
 
-    static <T extends Enum<T>> T parseEnum(Class<T> enumClass, String enumStr) {
+    public static <T extends Enum<T>> T parseEnum(Class<T> enumClass, String enumStr) {
         T[] vals = enumClass.getEnumConstants();
 
         String enumName = "";
