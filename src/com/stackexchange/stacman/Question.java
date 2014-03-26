@@ -9,6 +9,7 @@ import java.util.Date;
  */
 public final class Question implements Serializable {
     private Integer accepted_answer_id;
+    public void setAcceptedAnswerId(Integer override) { accepted_answer_id = override; }
     public Integer getAcceptedAnswerId() { return accepted_answer_id; }
 
     private int answer_count;
@@ -19,6 +20,9 @@ public final class Question implements Serializable {
 
     private String body;
     public String getBody() { return body; }
+
+    private String body_markdown;
+    public String getBodyMarkdown() { return body_markdown; }
 
     private Integer bounty_amount;
     public Integer getBountyAmount() { return bounty_amount; }
@@ -34,6 +38,7 @@ public final class Question implements Serializable {
 
     private Comment[] comments;
     public Comment[] getComments() { return comments; }
+    public void setComments(Comment[] cs) { comments = cs; }
 
     private Long community_owned_date;
     public Date getCommunityOwnerDate() { return community_owned_date != null ? new Date(community_owned_date* 1000) : null; }
@@ -47,6 +52,9 @@ public final class Question implements Serializable {
     private int favorite_count;
     public int getFavoriteCount(){ return favorite_count; }
 
+    private boolean favorited;
+    public boolean getFavorited() { return favorited; }
+
     private boolean is_answered;
     public boolean getIsAnswered() { return is_answered; }
 
@@ -58,6 +66,9 @@ public final class Question implements Serializable {
 
     private String link;
     public String getLink() { return link; }
+
+    private String share_link;
+    public String getShareLink() { return share_link; }
 
     private Long locked_date;
     public Date getLockedDate(){ return locked_date != null ? new Date(locked_date* 1000) : null; }
@@ -91,4 +102,19 @@ public final class Question implements Serializable {
 
     private int view_count;
     public int getViewCount(){ return view_count; }
+
+    private boolean upvoted;
+    public boolean getUpvoted() { return upvoted; }
+
+    private boolean downvoted;
+    public boolean getDownvoted() { return downvoted; }
+
+    private ClosedDetails closed_details;
+    public ClosedDetails getClosedDetails() { return closed_details; }
+
+    private boolean can_close;
+    public boolean getCanClose() { return can_close; }
+
+    private boolean can_flag;
+    public boolean getCanFlag() { return can_flag; }
 }

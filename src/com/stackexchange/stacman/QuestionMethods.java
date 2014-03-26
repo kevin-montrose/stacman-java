@@ -236,6 +236,35 @@ public final class QuestionMethods {
         client.validatePaging(page, pagesize);
         client.validateSortMinMax(sort, mindate, maxdate, min, max);
 
+        ApiUrlBuilder ub = new ApiUrlBuilder("/questions/featured", false);
+
+        ub.addParameter("site", site);
+        ub.addParameter("filter", filter);
+        ub.addParameter("page", page);
+        ub.addParameter("pagesize", pagesize);
+        ub.addParameter("fromdate", fromdate);
+        ub.addParameter("todate", todate);
+        ub.addParameter("sort", sort);
+        ub.addParameter("min", mindate);
+        ub.addParameter("max", maxdate);
+        ub.addParameter("min", min);
+        ub.addParameter("max", max);
+        ub.addParameter("order", order);
+        ub.addParameter("tagged", tagged);
+
+        return client.createApiTask(Types.Question, ub, "/questions/featured");
+    }
+
+    public Future<StacManResponse<Question>> getUnanswered(String site, String filter, Integer page, Integer pagesize, Date fromdate, Date todate, QuestionSort sort, Date mindate, Date maxdate, Integer min, Integer max, Order order, String tagged)
+    {
+        if(sort == null){
+            sort = QuestionSort.Default;
+        }
+
+        client.validateString(site, "site");
+        client.validatePaging(page, pagesize);
+        client.validateSortMinMax(sort, mindate, maxdate, min, max);
+
         ApiUrlBuilder ub = new ApiUrlBuilder("/questions/unanswered", false);
 
         ub.addParameter("site", site);
@@ -255,7 +284,7 @@ public final class QuestionMethods {
         return client.createApiTask(Types.Question, ub, "/questions/unanswered");
     }
 
-    public Future<StacManResponse<Question>> getUnanswered(String site, String filter, Integer page, Integer pagesize, Date fromdate, Date todate, QuestionSort sort, Date mindate, Date maxdate, Integer min, Integer max, Order order, String tagged)
+    public Future<StacManResponse<Question>> getUnansweredMyTags(String access_token, String site, String filter, Integer page, Integer pagesize, Date fromdate, Date todate, QuestionSort sort, Date mindate, Date maxdate, Integer min, Integer max, Order order, String tagged)
     {
         if(sort == null){
             sort = QuestionSort.Default;
@@ -264,10 +293,12 @@ public final class QuestionMethods {
         client.validateString(site, "site");
         client.validatePaging(page, pagesize);
         client.validateSortMinMax(sort, mindate, maxdate, min, max);
+        client.validateString(access_token, "access_token");
 
-        ApiUrlBuilder ub = new ApiUrlBuilder("/questions/featured", false);
+        ApiUrlBuilder ub = new ApiUrlBuilder("/questions/unanswered/my-tags", false);
 
         ub.addParameter("site", site);
+        ub.addParameter("access_token", access_token);
         ub.addParameter("filter", filter);
         ub.addParameter("page", page);
         ub.addParameter("pagesize", pagesize);
@@ -281,7 +312,7 @@ public final class QuestionMethods {
         ub.addParameter("order", order);
         ub.addParameter("tagged", tagged);
 
-        return client.createApiTask(Types.Question, ub, "/questions/featured");
+        return client.createApiTask(Types.Question, ub, "/questions/unanswered/my-tags");
     }
 
     public Future<StacManResponse<Question>> getWithNoAnswers(String site, String filter, Integer page, Integer pagesize, Date fromdate, Date todate, QuestionSort sort, Date mindate, Date maxdate, Integer min, Integer max, Order order, String tagged)
@@ -311,5 +342,190 @@ public final class QuestionMethods {
         ub.addParameter("tagged", tagged);
 
         return client.createApiTask(Types.Question, ub, "/questions/no-answers");
+    }
+
+    public Future<StacManResponse<Question>> ask(String access_token, String site, String filter, String title, String body, String tags, Boolean preview)
+    {
+        client.validateString(site, "site");
+        client.validateString(access_token, "access_token");
+
+        ApiUrlBuilder ub = new ApiUrlBuilder("/questions/add", true);
+        ub.addParameter("filter", filter);
+        ub.addParameter("access_token", access_token);
+        ub.addParameter("site", site);
+        ub.addParameter("title", title);
+        ub.addParameter("body", body);
+        ub.addParameter("tags", tags);
+        ub.addParameter("preview", preview);
+
+        return client.createApiTask(Types.Question, ub, "/questions/add", true);
+    }
+
+    public Future<StacManResponse<Question>> render(String access_token, String site, String filter, String title, String body, String tags)
+    {
+        client.validateString(site, "site");
+        client.validateString(access_token, "access_token");
+
+        ApiUrlBuilder ub = new ApiUrlBuilder("/questions/render", true);
+        ub.addParameter("filter", filter);
+        ub.addParameter("access_token", access_token);
+        ub.addParameter("site", site);
+        ub.addParameter("title", title);
+        ub.addParameter("body", body);
+        ub.addParameter("tags", tags);
+
+        return client.createApiTask(Types.Question, ub, "/questions/render", true);
+    }
+
+    public Future<StacManResponse<Question>> edit(String access_token, String site, String filter, int questionId, String title, String body, String tags, String comment, Boolean preview)
+    {
+        client.validateString(site, "site");
+        client.validateString(access_token, "access_token");
+
+        ApiUrlBuilder ub = new ApiUrlBuilder("/questions/"+questionId+"/edit", true);
+        ub.addParameter("filter", filter);
+        ub.addParameter("access_token", access_token);
+        ub.addParameter("site", site);
+        ub.addParameter("title", title);
+        ub.addParameter("body", body);
+        ub.addParameter("tags", tags);
+        ub.addParameter("comment", comment);
+        ub.addParameter("preview", preview);
+
+        return client.createApiTask(Types.Question, ub, "/questions/{id}/edit", true);
+    }
+
+    public Future<StacManResponse<Question>> upvote(String access_token, String site, String filter, int questionId, Boolean preview) {
+        client.validateString(site, "site");
+        client.validateString(access_token, "access_token");
+
+        ApiUrlBuilder ub = new ApiUrlBuilder("/questions/"+questionId+"/upvote", true);
+        ub.addParameter("filter", filter);
+        ub.addParameter("access_token", access_token);
+        ub.addParameter("site", site);
+        ub.addParameter("preview", preview);
+
+        return client.createApiTask(Types.Question, ub, "/questions/{id}/upvote", true);
+    }
+
+    public Future<StacManResponse<Question>> undoUpvote(String access_token, String site, String filter, int questionId, Boolean preview) {
+        client.validateString(site, "site");
+        client.validateString(access_token, "access_token");
+
+        ApiUrlBuilder ub = new ApiUrlBuilder("/questions/"+questionId+"/upvote/undo", true);
+        ub.addParameter("filter", filter);
+        ub.addParameter("access_token", access_token);
+        ub.addParameter("site", site);
+        ub.addParameter("preview", preview);
+
+        return client.createApiTask(Types.Question, ub, "/questions/{id}/upvote/undo", true);
+    }
+
+    public Future<StacManResponse<Question>> downvote(String access_token, String site, String filter, int questionId, Boolean preview) {
+        client.validateString(site, "site");
+        client.validateString(access_token, "access_token");
+
+        ApiUrlBuilder ub = new ApiUrlBuilder("/questions/"+questionId+"/downvote", true);
+        ub.addParameter("filter", filter);
+        ub.addParameter("access_token", access_token);
+        ub.addParameter("site", site);
+        ub.addParameter("preview", preview);
+
+        return client.createApiTask(Types.Question, ub, "/questions/{id}/downvote", true);
+    }
+
+    public Future<StacManResponse<Question>> undoDownvote(String access_token, String site, String filter, int questionId, Boolean preview) {
+        client.validateString(site, "site");
+        client.validateString(access_token, "access_token");
+
+        ApiUrlBuilder ub = new ApiUrlBuilder("/questions/"+questionId+"/downvote/undo", true);
+        ub.addParameter("filter", filter);
+        ub.addParameter("access_token", access_token);
+        ub.addParameter("site", site);
+        ub.addParameter("preview", preview);
+
+        return client.createApiTask(Types.Question, ub, "/questions/{id}/downvote/undo", true);
+    }
+
+    public Future<StacManResponse<Question>> favorite(String access_token, String site, String filter, int questionId, Boolean preview) {
+        client.validateString(site, "site");
+        client.validateString(access_token, "access_token");
+
+        ApiUrlBuilder ub = new ApiUrlBuilder("/questions/"+questionId+"/favorite", true);
+        ub.addParameter("filter", filter);
+        ub.addParameter("access_token", access_token);
+        ub.addParameter("site", site);
+        ub.addParameter("preview", preview);
+
+        return client.createApiTask(Types.Question, ub, "/questions/{id}/favorite", true);
+    }
+
+    public Future<StacManResponse<Question>> undoFavorite(String access_token, String site, String filter, int questionId, Boolean preview) {
+        client.validateString(site, "site");
+        client.validateString(access_token, "access_token");
+
+        ApiUrlBuilder ub = new ApiUrlBuilder("/questions/"+questionId+"/favorite/undo", true);
+        ub.addParameter("filter", filter);
+        ub.addParameter("access_token", access_token);
+        ub.addParameter("site", site);
+        ub.addParameter("preview", preview);
+
+        return client.createApiTask(Types.Question, ub, "/questions/{id}/favorite/undo", true);
+    }
+
+    public Future<StacManResponse<Answer>> answer(String access_token, String site, Integer questionId, String filter, String body, Boolean preview)
+    {
+        client.validateString(site, "site");
+        client.validateString(access_token, "access_token");
+
+        ApiUrlBuilder ub = new ApiUrlBuilder("/questions/"+questionId+"/answers/add", true);
+        ub.addParameter("filter", filter);
+        ub.addParameter("access_token", access_token);
+        ub.addParameter("site", site);
+        ub.addParameter("body", body);
+        ub.addParameter("preview", preview);
+
+        return client.createApiTask(Types.Answer, ub, "/questions/{id}/answers/add", true);
+    }
+
+    public Future<StacManResponse<FlagOption>> getFlagOptions(String access_token, String site, Integer questionId, String filter) {
+        StacManClient.validateString(site, "site");
+        StacManClient.validateString(access_token, "access_token");
+
+        ApiUrlBuilder ub = new ApiUrlBuilder("/questions/"+questionId+"/flags/options", false);
+        ub.addParameter("filter", filter);
+        ub.addParameter("access_token", access_token);
+        ub.addParameter("site", site);
+
+        return client.createApiTask(Types.FlagOption, ub, "/questions/{id}/flags/options", false);
+    }
+
+    public Future<StacManResponse<FlagOption>> getCloseOptions(String access_token, String site, Integer questionId, String filter) {
+        StacManClient.validateString(site, "site");
+        StacManClient.validateString(access_token, "access_token");
+
+        ApiUrlBuilder ub = new ApiUrlBuilder("/questions/"+questionId+"/close/options", false);
+        ub.addParameter("filter", filter);
+        ub.addParameter("access_token", access_token);
+        ub.addParameter("site", site);
+
+        return client.createApiTask(Types.FlagOption, ub, "/questions/{id}/close/options", false);
+    }
+
+
+    public Future<StacManResponse<Question>> flag(String access_token, String site, Integer questionId, String filter, Integer optionId, String comment, String targetSite, Integer duplicateQuestionId) {
+        StacManClient.validateString(site, "site");
+        StacManClient.validateString(access_token, "access_token");
+
+        ApiUrlBuilder ub = new ApiUrlBuilder("/questions/"+questionId+"/flags/add", false);
+        ub.addParameter("filter", filter);
+        ub.addParameter("access_token", access_token);
+        ub.addParameter("site", site);
+        ub.addParameter("option_id", optionId);
+        ub.addParameter("comment", comment);
+        ub.addParameter("target_site", targetSite);
+        ub.addParameter("question_id", duplicateQuestionId);
+
+        return client.createApiTask(Types.Question, ub, "/questions/{id}/flags/add", true);
     }
 }

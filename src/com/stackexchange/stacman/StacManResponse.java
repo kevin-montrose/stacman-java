@@ -17,7 +17,7 @@ public final class StacManResponse<T> {
 
     public boolean getReceivedApiResponse() { return getData() != null; }
 
-    StacManResponse(Wrapper<T> data, Exception error) {
+    public StacManResponse(Wrapper<T> data, Exception error) {
         setData(data);
         setError(error);
 

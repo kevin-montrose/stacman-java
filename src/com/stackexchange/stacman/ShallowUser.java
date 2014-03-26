@@ -27,4 +27,7 @@ public final class ShallowUser implements Serializable {
 
     private String user_type;
     public UserType getUserType() { return StacManClient.parseEnum(UserType.class, user_type); }
+
+    private BadgeCount badge_counts;
+    public BadgeCount getBadgeCounts() { return badge_counts; }
 }
